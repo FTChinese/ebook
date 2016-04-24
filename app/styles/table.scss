@@ -1,0 +1,86 @@
+caption {
+display: table-caption;
+text-align: center;
+}
+
+table {
+margin:auto;
+display: table;
+border-collapse: separate;
+border-spacing: 2px;
+border-color: gray;
+}
+tr {
+display: table-row;
+vertical-align: inherit;
+border-color: inherit;
+}
+td, th {
+display: table-cell;
+vertical-align: inherit;
+}
+thead {
+display: table-header-group;
+vertical-align: middle;
+border-color: inherit;
+}
+
+.data-table {
+border-spacing: 0;
+}
+.data-table caption {
+font-weight: 500;
+text-transform: uppercase;
+}
+.data-table caption, .data-table thead {
+text-align: center;
+padding-top: $padding;
+}
+.data-table tbody:before, .data-table thead:before {
+content: "";
+display: block;
+height: 10px;
+}
+.data-table td {
+padding: 5px 10px;
+}
+.data-table td, .data-table th {
+vertical-align: top;
+font-size: 14px;
+}
+.data-table tbody tr:nth-child(2n+1) {
+background-color: #eae0d7;
+}
+
+.table-sparkline {
+	margin: 0 auto;
+    border-collapse: collapse;
+	th {
+	    font-weight: bold;
+	    text-align: left;
+	}
+	td, th {
+	    padding: 5px;
+	    border-bottom: 1px solid gray;
+	    height: 20px;
+	}
+
+	thead th {
+	    border-top: 2px solid gray;
+	    border-bottom: 2px solid gray;
+	}
+}
+.highcharts-tooltip>span {
+	background: white;
+	border: 1px solid silver;
+	border-radius: 3px;
+	box-shadow: 1px 1px 2px #888;
+	padding: 8px;
+}
+
+
+@media only screen and (max-width: 1023px) {
+    .data-table td, .data-table th {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,24 @@
+.n-home-course-container {
+	width: 50%;
+}
+.n-home-course-container.s-0 {
+	width: 100%;
+}
+.n-home-course-container.s-0:after {
+	padding-top: 1/2 * $homeCoursePicRatio;
+}	
+.n-home-course-container.s-1:after, .n-home-course-container.s-3:after, .n-home-course-container.s-5:after {
+	padding-top: 2 * $homeCoursePicRatio;
+}
+.n-home-course-container.s-3 {
+	float: right;
+}
+.n-content-inner {
+	.clearfloat.s-4 {
+		clear: left;
+		display: block;
+	}
+	.clearfloat.s-4, .clearfloat.s-7 {
+		display: block;
+	}
+}

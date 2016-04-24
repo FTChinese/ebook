@@ -1,0 +1,29 @@
+//verge layout style for middle sized devices
+.n-home-course-container.m-0 {
+	width: 100%;
+}
+.n-home-course-container.m-0:after {
+	padding-top: 1/2 * $homeCoursePicRatio;
+}
+.n-home-course-container.m-1:after, .n-home-course-container.m-4:after {
+	padding-top: 2 * $homeCoursePicRatio;
+}
+
+.n-home-course-container.m-4 {
+	float: right;
+}
+
+.n-home-course-container.m-8, .n-home-course-container.m-9 {
+	width: 50%;
+}
+
+
+.n-content-inner {
+	.clearfloat.m-5 {
+		display: block;
+		clear: left; 
+	}
+	.clearfloat.m-7, .clearfloat.m-9, .clearfloat.m-15 {
+		display: block;
+	}
+}

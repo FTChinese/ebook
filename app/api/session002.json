@@ -1,0 +1,61 @@
+{
+  "id": "002",
+  "title": "市场营销第二节",
+  "image": "http://lorempixel.com/800/450/business/",
+  "lead": "到了5岁，任何一个胸怀大志的特级大师应该至少已开始学棋",
+  "passMark": 70,
+  "course": "001",
+  "content": [
+    {
+      "title": "第一页",
+      "pageType": "quiz",
+      "question": "这是什么问题",
+      "rightanswer": "到了5岁，任何一个胸怀大志的特级大师应该至少已开始学棋",
+      "value": "2",
+      "wronganswer": [
+        "但那个年纪的芒努斯•卡尔森(Magnus Carlsen)对国际象棋毫无兴趣",
+        "他的父亲，一位喜爱国际象棋的业余棋手",
+        "只能把家里的象棋束之高阁，认为事情就这样了"
+      ],
+      "point": "第一个要注意的点"
+    },
+    {
+      "title": "第二页",
+      "pageType": "quiz",
+      "question": "这是什么问题2",
+      "value": "wrong value",
+      "rightanswer": "第一个",
+      "wronganswer": [
+        "第二个",
+        "第三个",
+        "第四个"
+      ],
+      "point": "第二个要注意的点"
+    },
+    {
+      "title": "第三页",
+      "pageType": "quiz",
+      "question": "这是什么问题3",
+      "rightanswer": "第一个",
+      "wronganswer": [
+        "第二个",
+        "第三个",
+        "第四个"
+      ],
+      "point": "第三个要注意的点"
+    },
+    {
+      "title": "第四页",
+      "pageType": "quiz",
+      "question": "这是什么问题3",
+      "value": 2,
+      "rightanswer": "第一个",
+      "wronganswer": [
+        "第二个",
+        "第三个",
+        "第四个"
+      ],
+      "point": "第四个要注意的点"
+    }
+  ]
+}

@@ -1,0 +1,1582 @@
+<!-- 如果您是制作新的HTML 5沉浸式报道，请直接跳到“所有内容开始” -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>特别报道</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon-precomposed" href="img/fticon.png" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <!-- build:css styles/main-demo.css -->
+    <link rel="stylesheet" href="styles/main-demo.css">
+    <!-- endbuild -->
+    <!-- Google Analytics -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'http://m.ftchinese.com/index.php/jsapi/analytics', 'ga');
+    ga('create', 'UA-1608715-1');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+</head>
+
+<body>
+    <div id="share-icon"><img src="http://s.ftimg.net/img/friend-share-icon.jpg" /></div>
+    <div id="o-rotate-note">
+        <div>旋转屏幕，查看精彩内容！</div>
+    </div>
+    <div id="screenstart" class=opening ontouchmove="event.preventDefault();"><span><p class=booklead id="startstatus">FT中文网特别报道</p><div class="progresscontainer instartscreen"><div id="startbar" class="progressbar standardprogressbar uses3d progressbg structureprogress"></div></div><p class=booklead id="loadstatus">&nbsp;</p></span>
+        <div class="backuplinks"><a onclick="javascript:window.location.reload()">重新加载</a></div>
+    </div>
+    <!--如果要出目录，就必须用到FTScroller-->
+    <div class="fullbody fruit landscapeImage" id="game">
+        <div id=swipe>
+            <div id=gamecontent>
+            </div>
+        </div>
+        <div class="tap pagedots"></div>
+        <div class="tap pagetitle"></div>
+        <div id="contentRail" style="">
+            <div class="-bg-checkered">
+                <div id="toolRail">
+                    <div class="nutmeg-content">
+                        <div class="nutmeg-content_left">
+                            <button onclick="jumptostory('contentpage')" class="button-menu"><span id='index-title'>目录</span></button>
+                        </div>
+                        <div class="nutmeg-content_right">
+                            <button onclick="setting()" class="nutmeg_settings-btn" aria-label="Settings"></button>
+                        </div>
+                        <div class="nutmeg-content_right rightmargin">
+                            <button onclick="setFontSize()" class="nutmeg_fontsize-btn" aria-label="Settings"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="imageRail">
+                <div id="imageRailInner"></div>
+            </div>
+        </div>
+        <div id=fontsetting class=overlay>
+            <div class=overlayBG></div>
+            <div class=inner>
+                <div class=cell>
+                    <div class=settingbox>
+                        <div class=overlay-header>
+                            <div class="nutmeg-content_right rightmargin">
+                                <button onclick="closeFontSize()" aria-label="Settings">确定</button>
+                            </div>
+                            设置字号
+                        </div>
+                        <div class="fontpreferences overlay-content">
+                            <div id=extra-small class=extra-small>最小<span class="tickbg"></span></div>
+                            <div id=small class=small>小<span class="tickbg"></span></div>
+                            <div id=medium class=medium>适中<span class="tickbg"></span></div>
+                            <div id=big class=big>大<span class="tickbg"></span></div>
+                            <div id=extra-big class=extra-big>特大<span class="tickbg"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id=setting class=overlay>
+            <div class=overlayBG></div>
+            <div class=inner>
+                <div class=cell>
+                    <div class=settingbox>
+                        <div class=overlay-header>
+                            <div class="nutmeg-content_right rightmargin">
+                                <button onclick="closeSetting()" class="overlay_close-btn" aria-label="Settings"></button>
+                            </div>
+                            设置与帮助
+                        </div>
+                        <div class="nightreading">
+                            <strong>夜间模式</strong>
+                            <span class="displayvalue" onclick="switchNightReading()">
+                        <span class="ui-toggle">
+                            <span class="ui-toggle-button"></span>
+                            <span class="ui-toggle-label ui-toggle-label-on">开</span>
+                            <span class="ui-toggle-label ui-toggle-label-off">关</span>
+                            </span>
+                            </span>
+                            <span class="description">在晚上切换为夜间阅读模式，可以减小对眼睛的压力，并节约电池</span>
+                        </div>
+                        <div class="bgpreferences overlay-content">
+                            <strong>自选背景</strong>
+                            <div id=pink>粉色<span class="tickbg"></span></div>
+                            <div id=white>白色<span class="tickbg"></span></div>
+                        </div>
+                        <div class="standalonebutton">
+                            <a href="mailto:ftchinese.feedback@gmail.com?subject=Feedback on FT HTML 5 Story" id="feedbackEmail">
+                                <button class="ui-light-btn">反馈问题</button>
+                            </a>
+                        </div>
+                        <div id="testMessage"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id=largepic class=overlay>
+            <div class=overlayBG></div>
+            <div class=inner>
+                <button class="cherry_button"></button>
+                <div class=cell>
+                </div>
+            </div>
+        </div>
+        <div id="allcontent" style="display:none;">
+            <!-- 所有内容开始 -->
+            <!-- Please use tab for indentation -->
+            <!-- Add all your inline styles here using the preset breakpoints-->
+            <style>
+            /* mobile first*/
+            
+            .o-bg-section-1.slide {
+                background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3Ab9d9f37a-15de-11e5-be54-00144feabdc0?source=next&fit=scale-down&width=710);
+            }
+            
+            .o-bg-section-2.slide {
+                background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3A5792bd98-ccb7-11e4-b5a5-00144feab7de?source=next&fit=scale-down&width=710);
+            }
+            
+            @media only screen and (min-width: 450px) {
+                .o-bg-section-1.slide {
+                    background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3Ab9d9f37a-15de-11e5-be54-00144feabdc0?source=next&fit=scale-down&width=710);
+                }
+                .o-bg-section-2.slide {
+                    background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3A5792bd98-ccb7-11e4-b5a5-00144feab7de?source=next&fit=scale-down&width=710);
+                }
+            }
+            
+            @media only screen and (min-width: 700px) {
+                .o-bg-section-1.slide {
+                    background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3Ab9d9f37a-15de-11e5-be54-00144feabdc0?source=next&fit=scale-down&width=710);
+                }
+                .o-bg-section-2.slide {
+                    background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3A5792bd98-ccb7-11e4-b5a5-00144feab7de?source=next&fit=scale-down&width=710);
+                }
+            }
+            
+            @media only screen and (min-width: 1024px) {
+                .o-bg-section-1.slide {
+                    background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3Ab9d9f37a-15de-11e5-be54-00144feabdc0?source=next&fit=scale-down&width=710);
+                }
+                .o-bg-section-2.slide {
+                    background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3A5792bd98-ccb7-11e4-b5a5-00144feab7de?source=next&fit=scale-down&width=710);
+                }
+            }
+            </style>
+
+            <div class=slide topic=图表 title=一带一路投资件数占比>
+                <div class=animation function=percentageArea></div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark" topic="封面" style="background-image: url(http://i.ftimg.net/picture/2/000053692_piclink.jpg);">
+                <div class="page">
+                    <h1 class="story-title text-inner normal" style="line-height:1.2em;">FT中文网10周年回顾</h1>
+                    <h2 class="story-heading text-inner small">此刊记录了FT中文网十年成长历程（2005-2015）</h2>
+                </div>
+            </div>
+            <div class="slide contentpage" topic="目录" storyid="contentpage">
+                <div class=page>
+                    <div class="header notouchall">
+                        <div class="navleftcontainer notouchall" onclick="sectionScroller.scrollBy(-$(window).width(), 0,300);return false;">
+                            <div class="subleftbg notouchall"></div>
+                        </div>
+                        <div class="navrightcontainer notouchall" onclick="sectionScroller.scrollBy($(window).width(), 0,300);return false;">
+                            <div class="subrightbg notouchall"></div>
+                        </div>
+                        <div class="navigationScroller notouchall">
+                            <ul class="navigation notouchall"></ul>
+                        </div>
+                    </div>
+                    <div class=theContent>
+                        <div class="tint-pink" id=coverintro>
+                            <div class="tint-inner">
+                                <!-- 全书的名字 -->
+                                <div style="line-height:100%;margin:0 0 15px 0;padding:0;font-weight:bold;font-size:25px;">关于FT中文网</div>
+                                <!-- 图片 -->
+                                <img src="http://i.ftimg.net/picture/2/000053692_piclink.jpg" />
+                                <br>
+                                <!-- 说明 -->
+                                FT中文网是英国《金融时报》集团出品的中文商业财经网站。2005年8月31日，FT中文网正式推出。凭借英国《金融时报》遍布全球的丰富报道资源，FT中文网深入分析对中国经济和全球商业具有影响力的重大事件，并揭示事件的来龙去脉，以真正富有国际视野的权威报道成为中国高级管理人员“必读”的商业财经资讯网站。目前，FT中文网拥有逾230 万注册用户，移动产品已覆盖iOS、Android和Windows系统。同时，FT中文网不断扩展其在商业教育领域的服务，2012年推出教育类付费产品FT中文网商学院iPad应用程序，入选为“App Store 2012年度精选”。
+                            </div>
+                        </div>
+                        <div class="scrollPage">
+                            <div class="container">
+                                <div class="contentcategory"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark" title="2005－2007年" lead="FT中文网成立" style="background-image: url(http://i.ftimg.net/picture/9/000053759_piclink.jpg);">
+                <div class="page">
+                    <div class="o-block o-text-block o-bottom o-right">
+                        <p>英国《金融时报》中文网于2005年8月31日举办运营启动派对活动，宣告FT中文网正式推出。
+                            <p>2006年12月，荣获《南方周末》“年度最具成长性媒体奖”；并首次举办FT中文网主编读者见面会。</p>
+                            <p>2007年5月，资深记者魏城荣获“亚洲出版人协会(SOPA)解释报道类首奖”。12月，被《新周刊》评为“年度传媒网站”。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list" storyid="woz">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2008年
+                            </div>
+                            <div class=lead>首届中国年度论坛在京举行</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/8/000053828_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>6月，时任中国国务院副总理王岐山为FT撰文，发表署名文章《加强中美节能环保合作》，同期刊登在FT中文网。</p>
+                        <p>6月，专栏作家许知远荣获“亚洲出版人协会(SOPA)评论写作类首奖”。</p>
+                        <p>12月，首届中国年度论坛在北京举行，主题为“机遇与挑战：中国的新征途”。FT中文网以此为起点在北京、上海、宁夏、山东、四川、辽宁等地打造出FT国际金融论坛、中阿金融合作论坛、FT商界名家沙龙、FT读者俱乐部等多个活动品牌，为中国商务精英阶层提供一流的社交平台，助力合作伙伴实现品牌和产品的精准营销。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2009年
+                            </div>
+                            <div class=lead>网站焕然一新</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/6/000053796_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>3月，美国总统奥巴马于3月31日接受英国《金融时报》专访，同期刊登在FT中文网。奥巴马说“我比其他人更早阅读英国《金融时报》，从上世纪80年代在芝加哥就开始了。如今，这已成为一种时髦，每个人手里都握着一份。”</p>
+                        <p>3月，推出“午后速递”邮件订阅，将每日午后重要的财经资讯直接送达到读者的邮箱。</p>
+                        <p>3月，艾瑞新经济奖授予FT中文网 “2008-2009年度中国最佳成长互联网企业奖--商业管理类”。</p>
+                        <p>6月，推出手机站（m.ftchinese.com），免费呈现每日全部内容，方便读者随时随地查询每日“必读”的资讯。</p>
+                        <p>6月，专栏作家丁学良荣获“亚洲出版人协会 (SOPA) 专题特写类首奖”。</p>
+                        <p>8月，FT中文网总经理张延女士荣获艾瑞市场咨询集团颁发的“2009中国互联网新营销先锋人物奖”。</p>
+                        <p>9月，首场Lunch with the FT活动在北京举行。包括中国银行副行长朱民及招商局集团主席秦晓在内的十余位国内外知名企业家作为活动联合发起人参与了此次午餐讨论。</p>
+                        <p>9月，时任中国国务院副总理王岐山为FT撰文，发表署名文章《加强中英经济财金对话》，同期刊登在FT中文网。</p>
+                        <p>10月，FT中文网于2009年10月12日成功改版，提供更完善的用户体验、更丰富的财经资讯与互动社区服务。</p>
+                        <p>11月，FT中国年度论坛首次在青岛举办，主题为“中国力量：见证巨龙的步伐”。 </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark" data-fixed-bg="http://i.ftimg.net/picture/8/000053758_piclink.jpg">
+                <div class="page">
+                    <div class="o-block o-text-block o-bottom o-right">
+                        <p>时任中国国务院总理温家宝于2009年2月在伦敦接受英国《金融时报》主编Lionel Barber独家专访, 就中国应对国际金融危机及保持经济平衡较快发展等问题进行了交流，FT中文网前任总编辑张力奋先生陪同参与。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2010年
+                            </div>
+                            <div class=lead>推出首款数字产品</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/8/000053798_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>2月，FT中文网新浪微博官方账号上线。</p>
+                        <p>4月，FT中文网腾讯微博官方账号上线。</p>
+                        <p>5月，FT国际金融论坛落户青岛，并连续三年成功举办。</p>
+                        <p>6月，专栏作家吴晓波荣获“亚洲出版人协会(SOPA)商业报道类荣誉奖”。</p>
+                        <p>10月，推出首款数字产品——FT中文网iPad应用程序。</p>
+                        <p>11月，FT中国年度论坛首次在上海举行，主题为“2020：中国和世界的新纪元”。</p>
+                        <p>12月，荣获中国金融与财媒高峰论坛“2009年度最具影响力财经媒体奖”。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2011年
+                            </div>
+                            <div class=lead>推出FT中文网iPhone应用程序和Android应用程序</div>
+                            <div class=datestamp></div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/9/000053799_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>1月，联合中央电视台财经频道、德国罗兰贝格管理咨询公司在瑞士达沃斯世界经济论坛2011年会上发布“2010年最佳在华外资企业榜”。</p>
+                        <p>3月，iPad应用程序荣登苹果应用程序商店(App Store)新闻类免费应用程序排行榜第一名。</p>
+                        <p>5月，繁体中文版正式上线。</p>
+                        <p>6月，专栏作家老愚荣获“2011年度亚洲出版人奖(SOPA Awards)年度卓越评论奖”。</p>
+                        <p>6月，时任中国国务院总理温家宝为FT撰文，发表署名文章《温家宝：物价将稳步下降》，同期刊登在FT中文网。</p>
+                        <p>6月，2011年英国《金融时报》青岛国际金融高峰论坛在青岛举行，主题是中国经济的“开局 转型 优质增长”。</p>
+                        <p>6月，同步推出苹果版和安卓版手机应用程序，让读者在各个移动设备平台上都得到最好的阅读体验。 </p>
+                        <p>9月，与达沃斯论坛达成战略联盟，首次作为官方媒体合作伙伴对会议全程进行全面报道。</p>
+                        <p>9月，首度承办“中阿合作论坛——国际经济贸易分会”</p>
+                        <p>11月，年度中国高峰论坛在上海举行，主题为中国经济“挑战与超越”。</p>
+                        <p>11月，英国《金融时报》“巅峰女性”高峰会议首次在上海举办，并成功发布2011年度“全球商界女性50强”榜单。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2012年
+                            </div>
+                            <div class=lead>推出教育类付费产品FT中文网商学院iPad应用程序</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/9/000053819_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>3月，推出首款付费iPad应用程序“FT商学院”，同年，入选“App Store 2012年度精选”。</p>
+                        <p>5月，推出“乐尚街”奢侈品版块，旨在为中国读者带来新鲜的奢侈品行业资讯和时尚潮流，开启通往国际高端设计风尚的一扇窗。</p>
+                        <p>6月，2012年英国《金融时报》青岛国际金融高峰论坛在青岛举行，主题是中国经济的“蓝色战略·智慧增长”。</p>
+                        <p>6月，首届中国新媒体峰会在杭州举行，FT中文网入选“中国新媒体30强”榜单，并名列“中国传媒创新榜”。</p>
+                        <p>8月，腾讯微博粉丝超过百万。新浪微博、腾讯微博等社交平台粉丝总量超过280万。</p>
+                        <p>9月，2012中阿金融合作分会在银川举行。</p>
+                        <p>10月，首场读者俱乐部活动在北京举行，主题为“对话黄怒波——我的路，从官场到商场”。</p>
+                        <p>10月，作为微软重点合作伙伴，与微软同步推出Windows 8 应用程序。</p>
+                        <p>11月，年度中国高峰论坛在北京举行，主题为“时局与前瞻：变革中的抉择”。</p>
+                        <p>12月，官方微信正式开通，微信号为ftcweixin。</p>
+                        <p>12月，FT中文网商学院iPad应用程序入选“App Store 2012年度精选”(App Store Best of 2012)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark" title="年度高峰论坛" data-fixed-bg="http://i.ftimg.net/picture/2/000053862_piclink.jpg">
+                <div class="page">
+                    <div class="o-block o-text-block o-bottom o-right">
+                        <p>英国《金融时报》中国年度高峰论坛于2012年11月2日在北京举行，主题为“时局与前瞻：变革中的抉择”。 著名经济学家、原世界银行副行长林毅夫出席论坛并发表主旨演讲，他表示全球经济将面临大衰退，以国际上关注的欧债危机问题来看，南欧国家亟需进行提高生产竞争力的结构性改革。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2013年
+                            </div>
+                            <div class=lead>FT名家沙龙在英国驻华大使官邸举行</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/0/000053820_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>1月，FT中文网商学院iPad App入选App Store新手指南“商务类”应用程序推荐名单。</p>
+                        <p>2月，英国《金融时报》于2月13日正式展开125周年全球庆祝活动。</p>
+                        <p>3月，读者俱乐部活动在上海举行，主题是“可怕的市场周期”。</p>
+                        <p>3月，FT名家沙龙 （Tea with the FT）在英国驻华大使官邸举行，主题是“洞悉世界经济前景”。</p>
+                        <p>4月，成为HTC One手机首批BlinkFeed合作伙伴。 </p>
+                        <p>6月，专栏作家徐达内荣获“亚洲出版人协会(SOPA)评论写作荣誉奖”。</p>
+                        <p>9月，2013中阿博览会金融合作论坛在银川举行。</p>
+                        <p>9月，现任中国国务院总理李克强为FT撰文，发表署名文章《中国将继续持续发展之路》，同期刊登在FT中文网。</p>
+                        <p>11月，年度中国高峰论坛在北京举行，主题是“时局与前瞻：中国经济的平衡与突破”。</p>
+                        <p>11月，推出“FT论坛志”Web App，建立会议活动信息数字化发布平台。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2014年
+                            </div>
+                            <div class=lead>中国网球公开赛全球核心媒体合作伙伴</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/1/000053821_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>1月，英国《金融时报》正式推出三星智能电视应用程序。</p>
+                        <p>2月，全年承办12场“中关村国际化大讲堂”，助力中国企业走出去。</p>
+                        <p>3月，官方微信入选“首届最具影响力财经微信公众号”，荣登媒体类第三名。</p>
+                        <p>4月，在博鳌亚洲论坛期间，FT中文网与《博鳌观察》杂志联合主办“博鳌观察之夜”活动，并共同发布《亚洲百强企业影响力年度报告》。</p>
+                        <p>5月，Android平板应用程序进驻小米应用商店，成为小米平板问世当日，首批进驻的100个应用程序之一。</p>
+                        <p>6月，前任总编辑张力奋荣获 “亚洲出版人协会 (SOPA) 专题特写类荣誉奖”，获奖作品是 《与FT共进午餐：陈小鲁》 。</p>
+                        <p>9月，英国 《金融时报》 报纸全新改版，采用由屡获殊荣的设计师Kris Sowersby设计的“Financier”字体，与网络版更紧密衔接。</p>
+                        <p>9月，在上海举行“FT私人董事会沙龙”。</p>
+                        <p>9月，2014中国网球公开赛在国家网球中心举行。FT中文网是此项赛事的全球核心媒体合作伙伴。</p>
+                        <p>10月， 作为2014摩根大通企业竞跑赛的独家网络媒体合作伙伴，FT中文网以最大团队阵容携手合作伙伴参加本届赛事。并荣获本次大赛T恤设计大奖，将所获1,000美元奖金全部捐献给爱佑慈善基金会。</p>
+                        <p>11月，APEC工商领导人峰会在北京举办，英国《金融时报》和FT中文网作为媒体合作伙伴受邀参会。</p>
+                        <p>11月，第七届英国《金融时报》年度中国高峰论坛在北京举行，活动主题为“时局与前瞻：寻找中国经济增长新动力”。 </p>
+                        <p>12月，FT中文网携手蜻蜓FM共同推出《FT商学院电台》频道，每周三更新。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide list">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                2015年
+                            </div>
+                            <div class=lead>推出首套Kindle版中文电子书《与FT共进午餐》</div>
+                            <!-- large代表这个图片可以点击放大 -->
+                            <!-- headshot代表这个图片放置在第二栏的底部 -->
+                            <img class="headshot" src="http://i.ftimg.net/picture/6/000053826_piclink.jpg" />
+                        </div>
+                    </div>
+                    <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+                    <div class="flowedContent">
+                        <p>1月，在《互联网周刊》发布的2014年APP排行榜中，FT中文网新闻客户端荣膺财经类第二名。</p>
+                        <p>2月，英国《金融时报》任命王丰为FT中文网总编辑，并于四月正式上任。前任总编辑张力奋在担任FT中文网总编辑十年后卸任，并继续担任FT中文网专栏作家以及荣誉创刊总编辑。</p>
+                        <p>3月，中央电视台新闻联播《数字两会》提到FT中文网对两会中国政府工作报告的深度解读，将1万8千字报告浓缩成54个段落，制作成长微博，并引起网友大量转发。</p>
+                        <p>3月，十二届全国人大三次会议闭幕后，现任中国国务院总理李克强在人民大会堂会见中外记者，并回答记者提出的问题。主持人点名英国《金融时报》记者首个提问，问题是关于中国人在海外置业以及政府是否会出台新政来促进国内房地产市场。</p>
+                        <p>3月，中国国务院李克强会见出席中国发展高层论坛2015年年会境外代表并座谈，英国《金融时报》首席经济评论员马丁·沃尔夫参加座谈会议。</p>
+                        <p>3月，中国国务院总理李克强在人民大会堂会见英国《金融时报》总编Lionel Barber，当晚中央电视台《新闻联播》报道本次会面。 专访文章同期刊登在FT中文网。</p>
+                        <p>4月，推出首套Kindle版中文电子书《与FT共进午餐》。自推出，便荣登“人物传记”类榜单的榜首，最高名列“Kindle商店付费排行榜”第8名。</p>
+                        <p>5月，携手埃森哲在北京成功举办“数字企业.无极限”圆桌论坛。</p>
+                        <p>6月，荣获“亚洲出版业协会(SOPA) 评论写作类”两项大奖。专栏作家笑蜀与吴伟分别荣获“最佳评论奖”与“评论荣誉奖”。</p>
+                        <p>6月，由浙江省人民政府主办，浙江省商务厅、英国《金融时报》承办的第17届浙江投资贸易洽谈会主场活动—“之江峰会”在宁波成功举办。</p>
+                        <p>6月，FT中文网联合榕树根儿童教育机构，在京东众筹平台，共同发起“世界因你而变”特别版公益众筹活动，帮助景颇族的小艺术家们走出大山。6月27日，10万元众筹目标达成。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark" title="李克强" data-fixed-bg="http://i.ftimg.net/picture/7/000053827_piclink.jpg">
+                <div class="page">
+                    <div class="o-block o-text-block o-bottom o-left animated fadeInDown">
+                        <p>中国国务院总理李克强于2015年3月在人民大会堂会见英国《金融时报》总编Lionel Barber。三篇专访文章《李克强接受FT专访实录》、《李克强：中国无意挑战国际秩序》与《巴伯采访日记：李克强的鲶鱼策略》同期刊登在FT中文网。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5">
+                <div class=page>
+                    <img class="coverImage animated zoomIn slow delay-1n" src="http://i.ftimg.net/picture/4/000053834_piclink.jpg">
+                    <h3 class="animated fadeInLeft" id=booktitle>感谢您的支持！</h3>
+                    <p class="animated fadeInRight" style="font-size:30px;text-align:center;text-indent:0;margin-bottom: 14px;">非常感谢您对FT中文网的支持，请关注我们的微信号。</p>
+                    <p>
+                        <a href="http://www.amazon.cn/dp/B00W6GT3G8" target="_blank">
+                            <button class="blue big">Kindle版中文电子书《与FT共进午餐》</button>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://www3.ftchinese.com/app/tytp/index.php" target="_blank">
+                            <button class="blue big">十年十人—与FT中文网共同成长，精彩绝伦</button>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://z.jd.com/project/details/13751.html" target="_blank">
+                            <button class="blue big">榕树根景颇小艺术家北京游学展演活动公益众筹</button>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="http://www.ftchinese.com/m/marketing/intelligence.html" target="_blank">
+                            <button class="blue big">FT研究院—最具前瞻性的行业趋势洞察</button>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class=slide topic=图表 thumbnail="http://i.ftimg.net/picture/4/000047104_piclink.jpg" title=世界人口>
+                <div class=animation function=worldPopulation></div>
+            </div>
+            <div class="slide" storyid="001061995" topic="">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                一个中国农民工的故事
+                            </div>
+                            <div class=lead>
+                                亿万农民工进城创造了中国经济的奇迹。但“进城大军”中的很多人，如今却在体味和本文主人公相似的心路历程：辛酸的经历让他们对自己的进城务工之路感到迷茫，甚至开始考虑离开已拥挤不堪的大城市。他们的何去何从，也在深刻影响着中国经济的未来。 </div>
+                            <div class=datestamp>
+                                2015年05月15日 </div>
+                            <!-- <img class="headshot" src=http://i.ftimg.net/picture/7/000051657_piclink.jpg /> -->
+                        </div>
+                    </div>
+                    <div class="flowedContent">
+                        <div class=datestamp>2015年05月15日</div>
+                        <div class=byline>吉密欧</div>
+                        <p>还有一周就是中国农历新年了，向菊正在打点行装。她住在北京东五环路外一间又小又冷的出租屋里。</p>
+                        <p>为了取暖，她一边搓手，一边跺着自己那条健康的腿。她伸手去拿拐杖，她将拄着这幅拐杖踏上1500公里的旅程，回到坐落在长江沿岸、邻近三峡大坝的家乡。</p>
+                        <p>向菊在首都当了五年多的保姆和家政工。后来，她意外摔倒在结冰的人行道上，花了将近一年的工资接受膝关节重建手术——可她仍得回家过中国最重要的传统佳节。</p>
+                        <p>
+                            <div class="rightPic"><img src=" http://i.ftimg.net/picture/6/000051676_piclink.jpg " data-width="250" data-height="313" />向菊准备坐火车，从北京返回湖北老家</div>
+                        </p>
+                        <p>“我盼着见到女儿，回到家乡的村子——那里不管什么都更好吃，连米饭都更好吃！”她说，“但是路那么远，我不能走路又麻烦得很。路上的小偷和骗子会盯上我。”</p>
+                        <p>她一瘸一拐地走进巷子，有人在晾晒的衣服旁边挂着鱼干和一大袋晒干的猪蹄。周围满是嘈杂的各地口音和方言，与那些宣传福建、河南、四川和东北等遥远省份美食的广告栏颇为相称。</p>
+                        <p>向菊走过一块“老张火烧驴肉”的招牌。一群腿上绑着泥哨的鸽子飞过她的头顶，发出一阵怪响，她抬头看了一眼。这块破烂不堪、临时搭建的棚户区住的都是外地人，或许一年后就会被拆除，为已经在一栋又一栋逼近的高层公寓让路。</p>
+                        <p>眼下向菊管不了这些。她即将加入一场一年一度的“春运”——这不仅是每年地球上最大规模的人类迁徙，很可能还是最大的哺乳动物迁徙。2015年，估计有1.7亿人乘坐火车或飞机从中国的大城市回家过年。政府估计，在40天的春运大潮中，约有30亿人次出行（包括驾车和大巴）。</p>
+                        <p>与向菊一样，他们中的大多数人在乡村出生长大，之后前往中国的特大城市，从事低薪的制造业、建筑业和服务业工作。在经济改革引发进城务工大潮前夕的1978年，中国只有不到20%的人口居住在城市。如今，在这个世界人口头号大国，55%的人居住在城镇。</p>
+                        <p>但其中约有2.75亿人（占中国全部劳动力的三分之一以上）是农民工，他们无权永久定居，无法享受教育、养老、医疗等提供给“世袭”城市居民的福利。</p>
+                        <p>有些专家将这些壁垒与当年南非的种族隔离制度相提并论，因为出生在“农村”家庭的人被自动当作二等公民对待。世界银行(World Bank)表示，中国农民工平均在城里呆7到9年。虽然他们中逾半数希望最终在城里定居，但只有20%的人将家人接来同住。</p>
+                        <p>现在，中国民工潮正在转向，其中部分原因是上述政策的影响，还有一部分原因是经济因素和持续数十年的一胎政策导致人口结构恶化。官方数据显示，农民工数量年增长率已放缓至不到2%，远低于过去的水平。然而，这些数据并不十分可靠，一些经济学家认为，农民工数量已在减少，很多地方近年出现的用工荒和农民工工资快速上涨便是证明。</p>
+                        <p>
+                            <div class="inlinevideo" id="1F83A44DF9D1F3EE9C33DC5901307461" autostart=false title="向菊回家的内心戏" image="http://i.ftimg.net/picture/2/000051432_piclink.jpg" vid="1609" vsource=""></div>
+                        </p>
+                        <p>许多知名经济学家认为，中国已经触及所谓的“刘易斯拐点”(Lewis Turning Point)。这一理论由诺贝尔奖得主、经济学家亚瑟•刘易斯爵士(Sir Arthur Lewis)提出，它解释了工业化经济体廉价农村劳动力供应枯竭那一刻的前因后果。这个拐点具有深远影响——对中国的经济模式乃至现代中国社会的一切都是如此。中国总理李克强曾于今年3月宣告：“亿万农民工进城创造了中国经济的奇迹。”</p>
+                        <p>随着农民工进城的数量停止增长，甚至开始减少，不少人担心中国的经济奇迹随之终结。而且，由于执政的共产党的合法性主要建立在带来高速经济增长的基础之上，经济奇迹的终结有可能危及政权稳定。</p>
+                        <p>中国农村曾经供应了取之不尽的廉价、听话的工人，这种局面的结束，也为非洲和亚洲其他地方的较贫穷国家带来了机遇，让它们接手当年从西方转移到中国的低成本制造业。“中国现有的增长模式正在失去后劲，”世界银行在近期的一份报告中表示，“城市农民工工资快速上涨以及低技能劳动力的短缺似乎表明，选择进城的农民数量少于以往，也少于在经济上合理的水平。”</p>
+                        <p>面对这一划时代的重大转变，政府迄今的对策是鼓励向小城市迁移，限制向大城市迁移。它收紧了北京等地的户口隔离制度，同时放松了一些吸引力较低城市的落户政策。北京方面也在鼓励产业快速升级，并试图促进技术创新，以图在中国“人口红利”消褪之际提高生产率。</p>
+                        <p>
+                            <div class="leftPic"><img src=" http://i.ftimg.net/picture/5/000051715_piclink.jpg " data-width="300" data-height="311" /> 向菊在返乡的路途上</div>
+                        </p>
+                        <p>在作为农民工经历了歧视和欺凌之后，许多像向菊这样的人认定，自己或子女不该过这种生活。她的故事也许算不上特别典型，但确实代表了许多农民工在城里的那种复杂经历。</p>
+                        <p>对向菊和她的丈夫而言，当农民工是出于生计所迫：他们试图让家庭卸下沉重的债务负担。她现在的经济状况是耕种家里那一小块地所无法企及的。但她失去了许多，包括婚姻和照看两个女儿（分别为14岁和21岁）长大成人的机会，这使她很难确信自己做出了正确的选择。对她和她的一家来说，他们最珍惜的东西在试图挽回的过程中被毁坏了。</p>
+                        <p>清晨的宜昌是脏灰色的，向菊的同车旅客推搡着下了从北京始发的列车。宜昌是一座工业城市，这里的火车站离向菊老家的村子最近。夹杂着化学物质的雾霾让她嗓子眼直痛，却也将日出染成了粉红色，很是漂亮。</p>
+                        <p>片刻之后，她坐上了一辆吱吱作响的长途客车，沿着长江岸边缓缓前行。要回家，她得转几趟车，还要坐船渡过三峡大坝。这座世界上最大的大坝耗时十多年建成，其间迫使约150万人搬迁，包括向菊和她一家。</p>
+                        <p>过了大坝，客车在蜿蜒的窄路上越开越高，周围的景色渐渐从千篇一律的工业区变成风景如画的橙树林和茶园。这片地区是屈原故里，备受尊崇的屈原是公元前四世纪的爱国诗人和大夫，划龙舟和端午节皆源自他投江自尽的故事。</p>
+                        <p>
+                            <div class="rightPic"><img src=" http://i.ftimg.net/picture/6/000051716_piclink.jpg " data-width="269" data-height="220" /> 北京——向家湾：1500公里的返乡之旅</div>
+                        </p>
+                        <p>向菊家所在的村子叫做向家湾，几乎所有的村民都姓向。村里有大约210名村民，但向菊在村里的近亲只剩下了她的姑姑，这位精神矍铄的82岁老人回忆起1949年共产党胜利时人人洋溢的兴奋之情。邻居和远亲们纷纷来到向菊姑姑那狭小的三层砖房门口，打探向菊的近况，询问她的腿伤。</p>
+                        <p>据村支书介绍，60%的村民（包括几乎所有的40岁以下成人）常年在外打工，只有过年才回家。“通常，只有很小的孩子和老人才住在这里。但每个人都在50岁之后回乡。谁想在大城市过一辈子？空气太差，生活太艰难，”村支书王建国说道。向菊说，她的最终目标是回到山上老家的茅草顶泥砖房，享受田园的宁静，自己种菜，过着农民的简单生活。</p>
+                        <p>向菊1970年出生在这里，那年是狗年，正值文化大革命期间，食物匮乏，一场又一场政治运动席卷全国。在她小时候，全家只逢过年时吃一次肉，主要靠自种的红薯、玉米粉、花生、黄瓜、辣椒和土豆维生。</p>
+                        <p>她的父亲是“抗美援朝”（其他国家称之为“朝鲜战争”）时期的解放军老兵，大部分时间在外随一家国企修路。拥有公职意味着他的一家不用像其他农村人一样挨饿，但他工作十分辛苦，四十岁出头时突发中风，此后半身不遂。</p>
+                        <p>向菊学习不好，父亲生病后，15岁的她从村里的学校退学，以便给家里帮忙，并与姐姐和弟弟一起在家里的一小块菜地上忙活。22岁那年，她经朋友介绍认识了邻村青年向里红，两人恋爱6个月后于1992年结婚。大女儿琴琴出生后，这对年轻夫妻搬到江边一座更大的镇里谋求发展。</p>
+                        <p>
+                            <div class="leftPic"><img src=" http://i.ftimg.net/picture/7/000051717_piclink.jpg " data-width="300" data-height="268" /> 向菊全家在位于神农架镇的公寓看电视、吃水果和坚果</div>
+                        </p>
+                        <p>最初几年，他们在路边卖菜——村里亲戚种的白菜和萝卜——后来转行卖鞋。那时，向里红沿江而下430公里来到大城市武汉，买鞋带回镇里，在路边摆摊出售。但当三峡大坝2001年竣工、大水库开始蓄水时，他们所住的镇子被拆除、淹没，他们被迫搬到更高处的一座新镇。</p>
+                        <p>大约此时，他们的二女儿倩秋出生，向菊的父亲去世。当地的一胎政策已经过调整，允许头胎是女孩的夫妻在7年后生育二胎，以阻止杀女婴行为。</p>
+                        <p>就在小家庭扩大之际，夫妻二人的小生意却遭遇一股强大力量的冲击。他们的许多顾客是国企职工，而当时国企一家接一家破产，此前一直以为自己终生享有“铁饭碗”的职工被裁。</p>
+                        <p>随着这些新下岗的职工到大城市务工，他们能够自己买鞋，回家时还会为亲友带鞋，不再从向菊和向里红那里买鞋。到了2007年，夫妻俩生意破产，还欠下当地一家信用合作社3万元人民币的债务。</p>
+                        <p>破产后的第一年，向里红靠着骑三轮摩托车拉货挣钱，向菊则在家照顾女儿。但在2008年，艰难的处境促使她走出家门，在步行距离几小时之外的一家灯泡厂工作。她说：“我们急需还贷，还要为女儿上学做打算，为了拯救家庭，我成为了农民工。”</p>
+                        <p>
+                            <div class="rightPic"><img src=" http://i.ftimg.net/picture/8/000051718_piclink.jpg " data-width="300" data-height="194" /> 向菊家人放鞭炮，庆新年</div>
+                        </p>
+                        <p>她每天工作12小时，每周工作6天，每月能挣800到1000元。但工厂的空气毒性很大，她不得不把一部分工资花在中药上，大多数夜晚因为咳嗽而无法入睡。“我在那干了一年，但工厂毒性太强。实话说，如果再多干一段时间，我命都没了。”</p>
+                        <p>呆在家里恢复期间，向菊在电视上看到一则广告，介绍政府组织的北京家政就业安置计划。通过全身体检后，她在一座地级市接受了10天的培训，然后被送往北京。在北京，来自全国各地的5000名女性在天安门广场的人民大会堂以“劳动模范”的身份受到欢迎，然后被送去参加15天的军训。</p>
+                        <p>她很快得到了第一份工作：在一户人家做饭、打扫卫生、照顾一名一岁的小孩。孩子的母亲是中国某顶尖大学的教授，父亲整日在家炒股。“刚开始干活时，我是真的能‘吃苦’，干活很卖力，”她说，“他们对我很好。大约一年之后我回家过年，他们告诉我：在下一份工作中不必如此诚实、可靠、任劳任怨。”</p>
+                        <p>当时是2009年，她的第一份工作月薪1700元。到2014年底，她已先后为5个不同的家庭服务，月薪涨到7000元。</p>
+                        <p>经济学家们表示，刘易斯拐点到来的最佳证据，便是近年来农民工工资的迅速上涨。“工资上涨反映了劳动力市场的实际供需，表明中国的整个情况已经发生变化，”北京大学教授黄益平表示，他也是最早发现中国触及刘易斯拐点的经济学家之一。“刘易斯拐点降临中国的时间早于其他经济体，也早于我们的预期，部分原因是前些年的经济增长如此迅猛，但也是因为一胎政策的扭曲影响。”</p>
+                        <p>
+                            <div class="leftPic"><img src=" http://i.ftimg.net/picture/9/000051719_piclink.jpg " data-width="300" data-height="200" /> 向菊全家吃年夜饭</div>
+                        </p>
+                        <p>初抵北京时，向菊的唯一目标是挣足够的钱偿还家庭债务，供两个女儿上学。但随着时间推移，她的期望发生了变化，梦想也越来越大。从担心吃了上顿没下顿的年轻女子，她变成了害怕变胖、追随新潮减肥计划的中年女人。</p>
+                        <p>就连她说话的方式也变了。在英国，从曼彻斯特、利兹或格拉斯哥去伦敦的人会渐渐软化自己的口音，直到听起来像是泰晤士河流域出生的人。就像他们一样，向菊浓厚的农村腔也转变为比较标准的普通话。</p>
+                        <p>“小时候的我没有希望和梦想——我只管有饭吃、有衣穿。第一次去北京的时候，我只想赚足够的钱，”她说，“现在我认识到这不够。我不满足。我现在的梦想是有朝一日拥有自己的公司。我不知道自己能不能实现。”</p>
+                        <p>但在眼界渐宽的同时，她失去了许多曾经拥有的东西，忘却了成为农民工的初衷。两个女儿都说父母不在身边影响了她们的学习，向菊自己承认婚姻名存实亡。她与丈夫一年只见一到两次面，通常是在过年前后。尽管手机聊天应用的兴起让她与女儿们保持频繁联系，但她不愿意与丈夫向里红通电话。</p>
+                        <p>就在向菊去村子拜访姑姑的次日，她的丈夫不期而至。夫妻六个多月来的第一次交流话不投机，很快演变成一场激烈的争执。</p>
+                        <p>45岁的向里红矮瘦、结实，脸庞黝黑、俊朗，轮廓鲜明，头上没有一根白发。他在家里八个兄弟中排行老七，父亲在他两岁、弟弟只有40天时自杀身亡。他平静地解释道，事情发生在1973年，正值文化大革命晚期，许多人忍饥挨饿；他说，在接近饥荒的情况下养活八个小男孩的压力让父亲疯了。</p>
+                        <p>11岁那年，向里红从村里的学校退学，帮忙种庄稼，喂养家里养得起的寥寥几只鸡和猪。不到一年后，他的母亲在睡梦中去世，他和五个兄弟只好在茅草房的家里相互照料，靠着村里分的几亩地维生，直到他们相继成家搬走。</p>
+                        <p>“第一次看到向菊的时候，我觉得她是我见过最漂亮的女孩子，于是我一直追她，直到她同意嫁给我，”他说。</p>
+                        <p>自2010年以来，他也是一名农民工，在中国各地的建筑工地忙碌——包括南方热带岛屿海南岛的一座核电站。去年8月，他与几百名工人飞往喀麦隆，为一家中国国企建造水电站大坝。</p>
+                        <p>他成了家里第一个出国和坐飞机的人，理论上工资也很高——每月1.2万元人民币，而且包吃包住。</p>
+                        <p>一到喀麦隆，他就不喜欢这个地方。中国工人的活动范围主要局限在建筑工地，但有一次他被允许离开工地，在首都雅温得游览一天。他说，他意识到中国是个多么美好、繁荣的国家。“他们的首都还没有我们的小乡镇好！”他说。</p>
+                        <p>两个月后，他患疟疾不能出工。一个月后，公司克扣了他的工钱，用不到两个月的工资打发他回国。去年10月回国后，他受雇在宜昌修建公寓，但时值全国房地产低迷。当他准备回家过年时，公司称没钱付他工资。</p>
+                        <p>麻辣鱼火锅、海带汤、炒荷兰豆、辣椒炒土豆丝，一瓶喝起来有中药味的辛辣白酒，组成了家里的晚餐。向里红在餐桌上大倒苦水，却始终不敢正眼看妻子。向菊看着丈夫，脸上带着不屑的神情。</p>
+                        <p>“她连话都不跟我说，我都不知道自己哪里做错了。我跟她道歉过很多次——不能给她想要的，不能给她富裕、稳定的家庭，”他平静、和气地说道，“我们每年只能见面一个星期到10天，也没有共同语言，没有什么把我们维系在一起。”</p>
+                        <p>多年来，向菊与家境优越的北京雇主相处，普通话越说越好，而向里红只能与出身同样卑微的工人打交道，不会说当地方言的人几乎听不懂他的口音。</p>
+                        <p>
+                            <div class="rightPic"><img src=" http://i.ftimg.net/picture/0/000051720_piclink.jpg " data-width="300" data-height="200" /> 神农架镇——向菊的母亲与向菊的弟弟一家住在这个山中小镇上</div>
+                        </p>
+                        <p>第二天，伴着冬末的飘雪，夫妻二人坐上了翻越峡谷的长途客车。向菊仍然不愿和丈夫说话，两人分坐在客车的两端。六小时车程的那头，他们的两个女儿正在神农架的车站等候。向菊的母亲与向菊的弟弟一家住在这个山中小镇，全家将在那里过年。</p>
+                        <p>小女儿倩秋搀扶着向菊一瘸一拐下了车，两人之间几乎什么也没说。大女儿琴琴根本没跟母亲打招呼，而是走开，去拦了一辆出租车，把一家人载到家里的卤肉店。</p>
+                        <p>店铺的后堂洋溢着节日气氛，向菊驼背的70岁母亲和弟妹正忙着准备年饭。向菊一家坐在后堂里，爱唠叨的弟弟在招待排队购买卤鸡爪、卤鸭脖、卤猪蹄、卤猪尾、卤牛蹄筋、卤猪耳朵皮、卤鸭胗的顾客。</p>
+                        <p>中国春节与西方世俗化的圣诞节相仿，家庭团聚、大吃大喝，还有大量鞭炮和焰火增添喜庆气氛。全家围桌而坐，开始年三十中午的年饭时，小镇和四周的山上响起此起彼伏的鞭炮声。</p>
+                        <p>21岁的琴琴身材微胖，心思慎密，她在武汉一家技术学院学习工厂管理。午饭后，她说起了父母离家打工后姐妹俩学习成绩严重下降的事。“我们是被遗弃的孩子，”她半开玩笑地说。</p>
+                        <p>她还说，自己经常跟母亲起争执，而且，尽管她认为父母双方肯定都对夫妻关系恶化负有责任，但至少父亲在试图改善，而母亲说不出甚至不愿说出真正的问题所在。</p>
+                        <p>
+                            <div class="leftPic"><img src=" http://i.ftimg.net/picture/1/000051721_piclink.jpg " data-width="300" data-height="200" /> 打算回家过年的返乡者排队等待上车</div>
+                        </p>
+                        <p>向里红午饭畅饮了一瓶白酒（酒劲很强的中国烈酒）。饭后，他在神农架周围的山丘上散步时敞开心扉，述说了自己的婚姻状况。</p>
+                        <p>“这本该是一年最幸福的时光，但我过得太惨了，甚至想过自杀，”他说，“我俩结婚时我告诉向菊，虽然我没文化也不是很聪明，但只要我有双手，我就会保证它们派上用场，照顾家庭，搞好生活。但去了北京之后，她的期望变了，她觉得自己想要更多的东西，我已经给不了她了。”向菊坚称，自己的最终目标仍然是返回老家向家湾，自己种菜吃，过简单的农村生活。</p>
+                        <p>但鉴于她是农民工，腿部手术又是在北京市内的军队医院完成，她的近7万元医疗费很难得到政府报销。这使她再次背上债务，也意味着一旦腿伤痊愈，她得继续工作很长一段时间，才有望还清债务，重新存钱。</p>
+                        <p>在某个层面上，她也意识到自己陷入了进退两难的境地：一边是被浪漫化的童年农村生活，另一边是改变了她的大城市。“一旦性格和期望变了，就没法回到从前了，”她说，“不论发生什么，我都会尽自己的努力保障女儿得到良好的教育，在一个地方安定下来，不要到头来又成了大城市的农民工。”</p>
+                        <p>越来越多的农民工得出与向菊相同的结论。中国农民工进城大潮如今开始逆转，特别是考虑到相对于拥挤、污染的城市，农村的生活已经有所改善——这在一定程度上要归功于政府的多年投资。数亿农民工的辛酸故事合在一起，使推动中国经济30余年的社会/经济模式渐渐落幕。</p>
+                        <p>世界人口最多国家及其经济何去何从，将取决于像向菊一家这样的亿万人的选择和故事，他们已经厌倦了在城市寻找更美好的生活。</p>
+                        <p><i>谷禹补充报道</p>
+<p>本文作者为英国《金融时报》北京分社社长</p>
+<p>谷禹为英国《金融时报》前新闻助理</p>
+<p>摄影：格雷姆•尼科尔(Graeme Nicol)；路透社(Reuters)</i></p>
+                        <p>译者/何黎</p>
+                    </div>
+                </div>
+            </div>
+            <!--插入文章-->
+            <!--可以利用CMS的文章导出功能自动生成下方的代码-->
+            <div class="slide" storyid="001062705" topic="">
+                <div class="page article">
+                    <div class="articleviewport">
+                        <div class="articletarget"></div>
+                    </div>
+                    <div class="fixedContent">
+                        <div class="articleinfo">
+                            <div class=headline>
+                                “一带一路”看着诱人 分羹却不易
+                            </div>
+                            <div class=lead>
+                                FT记者休斯：在“一带一路”计划推动下，中国加速布局跨境基础设施建设，预计会带来巨大投资机会。但银行和长期投资者们究竟能在其中扮演什么角色，却尚未可知。
+                            </div>
+                            <div class=datestamp>
+                                2015年06月26日
+                            </div>
+                            <div class="inlinevideo" id="DCE25ED3B39457A09C33DC5901307461" autostart=false title="【音频】人民币国际化：借道“一带一路”？" image="http://i.ftimg.net/picture/5/000053645_piclink.jpg" vid="1675" vsource=""></div>
+                        </div>
+                    </div>
+                    <div class="flowedContent">
+                        <div class=datestamp>2015年06月26日</div>
+                        <div class=byline>珍妮弗•休斯</div>
+                        <p>中投公司(China Investment Corporation)首席策略官周元最近在香港的一次会议上对与会者说，尽管他不能保证会向大家透露什么情报，但他希望大家会对他说的东西感兴趣。这位冷幽默风格的首席策略官后来谈到了中国对该地区基础设施投资的看法，可以说是既让与会者了解到了一些情报，又引起了他们的浓厚兴趣。</p>
+                        <p>在亚洲金融圈里，鲜有话题比基础设施更能引起人们的兴趣和争论。与会者想知道，新成立的、中国主导的亚洲基础设施投资银行（Asian Infrastructure Investment Bank，简称：亚投行）到底将如何运作，以及银行、长期投资者等其他群体可能会扮演什么角色。</p>
+                        <p>最重要的是，很多人都在估算未来几年亚洲需要在基础设施上投入多少，并猜测中国会为此提供多少资金、以及基于什么条件提供。</p>
+                        <p>“如果你不能指望获得回报，也就是说，如果你不能指望基础设施项目在将来某个时刻向你支付红利，那你就不能再把它称作投资。你还不如把它称作马歇尔计划(Marshall Plan)，”周元在英国《金融时报》投资管理峰会(FT Investment Management Summit)上表示。</p>
+                        <p>当然有很多人拿中国的亚投行与1948年由美国供资的马歇尔计划作比较。马歇尔计划支持了欧洲在二战后的重建，并且有效地利用了美国的经常账户盈余来支撑美国的经济和地缘政治目标。</p>
+                        <p>中国目前的计划包括“一带一路”、在金砖国家开发银行和亚投行中的出资，以及其他投资——比如由其主权财富基金中投公司供资的投资。</p>
+                        <p>中国国家开发银行(China Development Bank)估计，“一带一路”的项目储备库，涉及投资资金超过8900亿美元。其他数字则显示，亚洲直至2020年的基建总投资需求接近8万亿美元。汇丰(HSBC)亚洲项目和出口融资主管詹姆斯•卡梅隆(James Cameron)表示：“每个人给出的数字都不同。只有一件事是肯定的，这些数字全是错的、但它们全都很大。”</p>
+                        <p>回到具体问题上，银行及其他投资者想知道中国计划中的支出会给他们带来什么机会。项目金融家的日子已然不太好过，因为监管机构正迫使银行为在风险较高的新兴市场的长期放贷留出更多资本金。</p>
+                        <p>投资者的日子也没有好过多少。对一名物色资产以匹配长期负债的养老基金经理来说，投资越南的一座发电站并以该电站未来的收益作为担保，似乎是个不错的押注。但监管机构担心汇率和国家风险，因此他们要求留够资本金并设立其他监管保障，从而推高了这类投资的成本。法国巴黎银行(BNP Paribas)亚太金融机构团队主管弗朗索瓦•勒布朗(François Leblanc)说：“养老基金和保险公司都非常感兴趣，但或许不总是能够投资。”他认为基金自身的投资准则也构成了限制。</p>
+                        <p>他说：“困难很多，要填补如今市场供给与投资者需求之间的缺口并不容易。”</p>
+                        <p>考虑到这一点，周元在商言商（至少是从中投立场出发）的评论应该会受到欢迎。近来有一种担忧是，中国会坚持供应商融资模式，即许多拥有自然资源的发展中国家得到资金来搞基建，而中国企业则是这些基础设施的供应商、资金提供方和建设方。</p>
+                        <p>如果中国以更认真的态度建立一种在商言商的市场化机制（包括通过其主导的亚投行），那么亚洲就可更普遍地从中获益。</p>
+                        <p>“亚投行拥有一系列潜在的工具，”汇丰的卡梅隆说，“他们可以直接投资或拨款，考虑或许承担部分风险，提供担保，或帮助确保提前给出正确的建议，以便将项目安排得更具吸引力，好吸引外部融资和投资。有很多工具可帮助开发整个基础设施融资领域。”</p>
+                        <p>亚洲基础设施格外不好做的原因是，该地区的法律体系和市场多种多样，而且都处于不同的发展阶段。进行当中的项目的范围之广，让这块业务变得更加复杂。但任何走向标准化的迹象——比如一个发电站或道路系统使用此前某个成功项目使用过的融资模式——都将有助于下一个项目。这最终可能会改变亚洲的融资及基础设施的面貌。</p>
+                        <p>译者/何黎</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark o-bg-section-1" title="封面" topic="封面">
+                <div class=page>
+                    <h1 class="story-title text-inner normal" style=line-height:1.2em;>从一带一路看中国变化
+    </h1>
+                    <h2 class="story-heading text-inner small">
+    宣示"一帶一路"戰略即将满两年，这段期间中国发生了什么变化？將來可能面对什么样的风险？</h2>
+                    <div class="o-text-block o-bottom o-right o-credit">
+                        <p>专辑制作：史书华</p>
+                        <p>补充报道：蒋馨尔</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 o-bg-style-dark o-bg-section-2" topic="图片" title="哈萨克斯坦">
+                <div class=page>
+                    <div class="o-block o-text-block o-bottom o-right">
+                        <p>2013年，习近平出访哈萨克斯坦。他对哈萨克丝坦表明，两国沿“丝绸之路”拥有共同的商业纽带，这历史可以追溯到两千多年以前。习近平接着提议要建设“丝绸之路经济带”，将为亚洲带来新的繁荣。</p>
+                        <p>习近平这次谈话几乎没引起媒体注意，但不到两年后，所谓的“一带一路”(One Belt, One Road)计划——结合海上丝绸之路——成了习近平外交政策和国际经济战略的核心。回过头看，这项行动的经济逻辑何在？
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class=slide topic=图表 title=出口>
+                <div class=animation function=obor_export></div>
+            </div>
+            <div class=slide topic=图表 title=非金融投资>
+                <div class=animation function=obor_nonFinancialExport></div>
+            </div>
+
+                        <!-- 表格：建议列数不要太多，以适应小屏幕 -->
+            <div class="slide layout-5" topic="表格" title="生活成本">
+                <div class="page longPicture animation" function="oborSparkline">
+                    <caption>生活成本—最昂贵城市</caption>
+                    <table id="table-sparkline" class="table-sparkline">
+                        <thead>
+                            <tr>
+                                <th>地区</th>
+                                <th>四年变化</th>
+                                <th>差值</th>
+                                <th>各类别下的变化</th>
+                                <!-- 能源、金属、房地产、科技、交通、其他 -->
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-sparkline">
+                            <tr>
+                                <th>阿拉伯中东和北非</th>
+                                <td data-sparkline="9090, 8700, 13930, 8950 " />
+                                <td>5090</td>
+                                <td data-sparkline="1370, 0, -190, -1790, 230, 5930 ; column" />
+                            </tr>
+                            <tr>
+                                <th>撒哈拉以南的非洲</th>
+                                <td data-sparkline="32640, 36400, 24470, 30710" />
+                                <td>-13860</td>
+                                <td data-sparkline="-7400, -6120, 2260, -1980, -1090, 470; column" />
+                            </tr>
+                            <tr>
+                                <th>东亚</th>
+                                <td data-sparkline="16530, 18970, 20350, 12650 " />
+                                <td>-2500</td>
+                                <td data-sparkline="-4500, -6410, 2390, 660, 2890, 2470 ; column" />
+                            </tr>
+                            <tr>
+                                <th>西亚</th>
+                                <td data-sparkline="17710, 20880, 32420, 17230 " />
+                                <td>11060</td>
+                                <td data-sparkline="510, -260, 1420, 740, 7180, 1470 ; column" />
+                            </tr>
+                            <tr>
+                                <th>欧洲</th>
+                                <td data-sparkline="18110, 13040, 27020, 30670 " />
+                                <td>26540</td>
+                                <td data-sparkline="1380, -460, 1350, 670, 11100, 12500; column" />
+                            </tr>
+                            <tr>
+                                <th>北美</th>
+                                <td data-sparkline="6940, 20110, 4680, 2330" />
+                                <td>-20040</td>
+                                <td data-sparkline="-20140, -420, 970, -280, -700, 530 ; column" />
+                            </tr>
+                            <tr>
+                                <th>美国</th>
+                                <td data-sparkline="9820, 14480, 13250, 20010 " />
+                                <td>8960</td>
+                                <td data-sparkline="-3640, -100, 4150, 8950, 1000, -1400 ; column" />
+                            </tr>
+                            <tr>
+                                <th>南美</th>
+                                <td data-sparkline="14090, 7030, 24450, 8230" />
+                                <td>11560</td>
+                                <td data-sparkline="6560, 4940, -260, 300, -690, 710; column" />
+                            </tr>
+                            <tr>
+                                <th>澳大利亚</th>
+                                <td data-sparkline="6690, 12650, 4650, 9420 " />
+                                <td>-5270</td>
+                                <td data-sparkline="-8270, -4690, 4090, 0, 1610, 1990 ; column" />
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="slide layout-5 o-bg-style-dark" topic=图片 title=上海 style="background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3A5792bd98-ccb7-11e4-b5a5-00144feab7de?source=next&fit=scale-down&width=710);">
+                <div class=page>
+                    <div class="o-block o-text-block o-bottom o-right">
+                        推出一带一路战略以来，中国对外投资产生什么样的变化？
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide layout-5 o-bg-style-dark" topic=图片 title=上海 style="background-image: url(https://next-geebee.ft.com/image/v1/images/raw/ftcms%3A5792bd98-ccb7-11e4-b5a5-00144feab7de?source=next&fit=scale-down&width=710);">
+                <div class=page>
+                    <div class="o-block o-text-block o-bottom o-right">
+                        当钱、人、策略，沿著一带一路向外推进，中国可能会碰上那些风险？
+                    </div>
+                </div>
+            </div>
+            <!--以视频为背景-->
+            <!--视频设为muted，自动加载，无限循环-->
+            <!--在手机和iPad上，翻到这一页不播放视频，只显示背景图片(.section-bg-3)-->
+            <!--适用于已经知道视频地址的情况-->
+            <!--请和技术部门或视频部门沟通，了解如何上传视频-->
+            <!--文字块可以通过o-bottom/o-top, o-left/o-right来放置到四个角-->
+            <div class="slide layout-5 o-bg-style-dark" topic=图片 title=文化 style="background-image: url(http://ig.ft.com/sites/2015/special-reports/shanghai/media/blinky-5-hr_trwu830.png);">
+                <div class=page>
+                    <div class=video-bg>
+                        <video preload=auto loop muted=muted> 文化
+                            <source src=http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky_5-revised.mp4 type=video/mp4>
+                            <source src=http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/blinky_5-revised.webmhd.webm type=video/webm>
+                        </video>
+                    </div>
+                    <div class="o-block o-text-block o-bottom o-left">
+                        <h1 class="story-title text-inner normal" style=line-height:1.2em;>视频1: 巴基斯坦</h1></div>
+                </div>
+            </div>
+            <!--利用data-fixed-bg这个属性为这一页设一个固定背景-->
+            <!--在翻页时产生类似backgound-attachement的效果-->
+            <div class="slide layout-5 o-bg-style-dark" topic=图片 title=工作 data-fixed-bg=http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/an26a8-hr.jpg>
+                <div class=page>
+                    <div class="o-block o-text-block o-bottom o-left">
+                        <p>‘对西方人来说，在华工作需要具备一套特别的技能——有时甚至对其他东亚国家的人来说也是如此’</p>
+                    </div>
+                </div>
+            </div>
+            <!--视频作为内容播放-->
+            <!--设定poster属性，在视频播放前预览-->
+            <!--由于iPhone和iPad的Bug，手指放在视频上无法翻页-->
+            <div class="slide layout-5 black" topic=视频 title=视频>
+                <div class=page>
+                    <div class=videocontainer>
+                        <video preload=none controls poster=http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/anna_greenspan-1-mr.png>
+                            <source src=http://p.bokecc.com/playvideo.bo?uid=922662811F1A49E9&playerid=3571A3BF2AEC8829&playertype=1&autoStart=true&vid=DCE25ED3B39457A09C33DC5901307461>
+                            <source src=http://p.bokecc.com/playvideo.bo?uid=922662811F1A49E9&playerid=3571A3BF2AEC8829&playertype=1&autoStart=true&vid=DCE25ED3B39457A09C33DC5901307461 type=video/webm> </video>
+                    </div>
+                </div>
+            </div>
+            <div class="slide layout-5 black" topic="视频" title="视频">
+                <div class=page>
+                    <div class="inlinevideo" id="DCE25ED3B39457A09C33DC5901307461" autostart=false title="【音频】人民币国际化：借道“一带一路”？" image="http://i.ftimg.net/picture/5/000053645_piclink.jpg" vid="1675" vsource=""></div>
+                </div>
+            </div>
+            <!-- 鸣谢：其实就是固定背景的模版 -->
+            <div class="slide layout-5 o-bg-style-dark section-bg-thanks" topic="制作团队" title="制作团队" data-fixed-bg="http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/bar_pic140510034_high_res_-hr_lm1svfb.jpg">
+                <div class="page">
+                    <div class="o-block o-text-block o-top o-left o-font-small o-credit">
+                        <h1 class="story-title text-inner normal" style="line-height:1.2em;">制作团队：</h1>
+                        <p>制作：史书华、蒋馨尔</p>
+                        <p>视频编辑：林栋、王烁</p>
+                    </div>
+                </div>
+            </div>
+            <!--相关链接-->
+            <!--利用o-side这个属性，右边底部的那个图片可以在手机屏幕上自动隐藏-->
+            <div class="slide layout-5 section-bg-thanks" topic=相关阅读 title=相关阅读>
+                <div class=page>
+                    <div class="o-block o-text-block o-top o-left o-font-small">
+                        <h1 class="story-title text-inner normal" style=line-height:1.2em;>相关阅读</h1>
+                        <p><strong>FT</strong>: </p>
+                        <p><a href=http://www.ftchinese.com/story/001061577 target=_blank>分析：经济减速让北京陷入两难</a> </p>
+                        <p><a href=http://www.ftchinese.com/story/001060251 target=_blank>上海11名官员因外滩踩踏事件受罚</a> </p>
+                        <p><a href=http://www.ftchinese.com/story/001060339 target=_blank>中国人心系中式早餐</a> </p>
+                        <p><strong>其他来源</strong>: </p>
+                        <p><a href=https://expatexplorer.hsbc.com/survey/files/pdfs/overall-reports/2014/HSBCExpatExplorer2014report.pdf target=_blank>Expat explorer report 2014 – HSBC</a> </p>
+                        <p><a href=http://www.mercer.com/content/mercer/global/all/en/newsroom/cost-of-living-survey.html target=_blank>Cost of living rankings 2014 – Mercer</a> </p>
+                        <p><a href=http://www.rolandberger.com/media/publications/2013-02-01-rbsc-pub-MaximizingthevalueofChinasmuseums.html target=_blank>Maximising the value of China’s museums, 2013 – Roland Berger</a> </p>
+                        <p><a href="http://www.nytimes.com/2012/04/15/travel/moganshan-china-a-lofty-retreat-from-sweltering-shanghai.html?r=0" target=_blank>A lofty retreat from sweltering Shanghai – New York Times</a> </p>
+                    </div>
+                    <div class="o-block o-text-block o-bottom o-right o-side"> <img src=http://www.ft.com/ig/sites/2015/special-reports/shanghai/media/_ab_1306-lr_dsiktn9.jpg> </div>
+                </div>
+            </div>
+            <!-- 所有内容结束 -->
+        </div>
+        <!--在固定在页面的元素-->
+        <div class="wheel-container animated running fadeInUpToggle">
+            <div id="o-wheel" class="wheel rotate"></div>
+        </div>
+        <script>
+        var wheelObject = document.getElementById("o-wheel");
+        </script>
+        <!--在固定在页面的元素-->
+        <div id=allads>
+            <div id="fullpageads" startPage="0" everyPage="5">
+                <!-- 全屏广告素材
+                <div class="slide layout-5 fullpagead" style="background:#000;">
+                    <div class="page">
+                        <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/datejustii.jpg">
+                    </div>
+                </div>
+                <div class="slide layout-5 fullpagead" style="background:#000;">
+                    <div class="page">
+                        <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/yachtmasterii.jpg">
+                    </div>
+                </div>
+                <div class="slide layout-5 fullpagead" style="background:#000;">
+                    <div class="page">
+                        <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/daydate.jpg">
+                    </div>
+                </div>
+                全屏广告素材结束-->
+            </div>
+            <div id="mpuads">
+                <!-- MPU广告素材
+                <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/p.gif">
+                </div>
+                <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/YMII_300x250_FT.jpg">
+                </div>
+                <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/datejust_FT_300x250.jpg">
+                </div>
+                <div class="mpuad">
+                    <div class="MPU tint-orange">HTML5 MPU</div>
+                </div>
+                -- MPU广告素材结束-->
+            </div>
+        </div>
+</body>
+<script>
+function isIE() {
+    return ((navigator.appName == 'Microsoft Internet Explorer') || ((navigator.appName == 'Netscape') && (new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null)));
+}
+
+//如果是IE，不管是什么版本，都中止程序
+if (isIE() === true) {
+    document.body.innerHTML = '<h1>亲爱的用户，我们发现您使用了IE浏览器！这会给您带来严重的安全隐患！请改用Chrome或FireFox等现代浏览器来浏览FT中文网的精彩内容！</h1>';
+}
+</script>
+<script>
+document.getElementById("startbar").style.width = "5%";
+</script>
+<!-- build:js scripts/demo.js -->
+<!-- bower:js -->
+<script src="../bower_components/ftscroller/lib/ftscroller.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/fastclick/lib/fastclick.js"></script>
+<script src="../bower_components/ftcolumnflow/src/FTColumnflow.js"></script>
+<script src="../bower_components/highcharts/highcharts.js"></script>
+<script src="../bower_components/highcharts/highcharts-more.js"></script>
+<script src="../bower_components/highmaps/modules/map.js"></script>
+<script src="../bower_components/highmaps/modules/data.js"></script>
+<script src="scripts/swipebook.js"></script>
+<script src="scripts/main.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<script src="http://s.ftimg.net/h5/map/AsiaAfricaEurope.js"></script>
+<script language=javascript>
+$(function() {
+    var firstImage = $('#allcontent .slide').eq(0).css('background-image') || '';
+    var img = new Image();
+    firstImage = firstImage.replace(/^url\(/g, '').replace(/\)$/g, '');
+    if (firstImage !== '' && firstImage !== 'none') {
+        img.src = firstImage;
+        img.onload = function() {
+            openbook();
+        };
+    } else {
+        openbook();
+    }
+    new FastClick(document.body);
+});
+</script>
+<script language=javascript>
+<!--Animation函数-->
+function playFunction(thefunction) {
+    switch (thefunction) {
+        case 'obor_nonFinancialExport':
+            obor_nonFinancialExport();
+            break;
+        case 'obor_export':
+            obor_export();
+            break;
+        case 'oborSparkline':
+            oborSparkline();
+            break;
+        case 'houseandstock':
+            houseandstock();
+            break;
+        case 'combinationChart001':
+            combinationChart001();
+            break;
+        case 'worldPopulation':
+            worldPopulation();
+            break;
+        case 'percentageArea':
+            percentageArea();
+            break;
+    }
+}
+
+
+
+function percentageArea() {
+
+    addNote('百分比');
+    var chart = new Highcharts.Chart({
+
+        chart: {
+            type: 'area',
+            renderTo: gChartId
+        },
+        title: {
+            text: 'Historic and Estimated Worldwide Population Distribution by Region'
+        },
+        subtitle: {
+            text: 'Source: Wikipedia.org'
+        },
+        xAxis: {
+            categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+            tickmarkPlacement: 'on',
+            title: {
+                enabled: false
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Percent'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} millions)<br/>',
+            shared: true
+        },
+        plotOptions: {
+            area: {
+                stacking: 'percent',
+                lineColor: '#ffffff',
+                lineWidth: 1,
+                marker: {
+                    lineWidth: 1,
+                    lineColor: '#ffffff'
+                }
+            }
+        },
+        series: [{
+            name: 'Asia',
+            data: [502, 635, 809, 947, 1402, 3634, 5268]
+        }, {
+            name: 'Africa',
+            data: [106, 107, 111, 133, 221, 767, 1766]
+        }, {
+            name: 'Europe',
+            data: [163, 203, 276, 408, 547, 729, 628]
+        }, {
+            name: 'America',
+            data: [18, 31, 54, 156, 339, 818, 1201]
+        }, {
+            name: 'Oceania',
+            data: [2, 2, 2, 6, 13, 30, 46]
+        }]
+
+
+    });
+
+}
+
+function obor_export() {
+    addNote('几个信号，透漏中国经济上的不安。第一，出口成长熄火。');
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: gChartId,
+            defaultSeriesType: 'line',
+            animation: {
+                duration: 500
+            }
+        },
+        title: {
+            text: '出口成長率'
+        },
+        yAxis: {
+            title: {
+                text: '出口成長率％'
+            },
+            min: -30
+        },
+        plotOptions: {
+            area: {
+                pointStart: 2003,
+            }
+        },
+        series: [{
+            name: '出口成長率(％)',
+            data: [
+                111.28, 15.499, 16.864, 20.708, 24.894, 21.053, -22.689, 37.627, 32.067, 15.033, 16.211, 13.171
+            ]
+        }, ]
+    });
+}
+
+
+
+function obor_nonFinancialExport() {
+    addNote('同时，非金融對外投資下降。2014年，中国对外投资逆差599亿。细探背后原因，有學者認為，并不是对外投资亏钱，恐怕对外投资不够多。');
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: gChartId,
+            defaultSeriesType: 'area',
+            animation: {
+                duration: 500
+            }
+        },
+        title: {
+            text: '非金融對外投資下降'
+        },
+        yAxis: {
+            title: {
+                text: '年增長率％'
+            },
+            min: 0
+        },
+        plotOptions: {
+            area: {
+                pointStart: 2003,
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            x: 0,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: '中国非金融类对外直接投资(年增長率％)',
+            data: [112.3, 93, 123, 31.6, 6.2, 63.6, 6.5, 36.3, 1.8, 28.6, 16.8, 14.1]
+        }, ]
+    });
+}
+
+
+
+
+function oborSparkline() {
+    Highcharts.SparkLine = function(options, callback) {
+        var defaultOptions = {
+            chart: {
+                renderTo: (options.chart && options.chart.renderTo) || this,
+                backgroundColor: null,
+                borderWidth: 0,
+                type: 'area',
+                margin: [2, 0, 2, 0],
+                width: 120,
+                height: 20,
+                style: {
+                    overflow: 'visible'
+                },
+                skipClone: true
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                lineWidth: 0,
+                labels: {
+                    enabled: false
+                },
+                title: {
+                    text: null
+                },
+                startOnTick: false,
+                endOnTick: false,
+                tickPositions: []
+            },
+            yAxis: {
+                reversed: false,
+                endOnTick: false,
+                startOnTick: false,
+                labels: {
+                    enabled: false
+                },
+                title: {
+                    text: null
+                },
+                tickPositions: [0],
+                plotLines: [{
+                    color: '#333',
+                    width: 1,
+                    value: 0
+                }]
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                backgroundColor: null,
+                borderWidth: 0,
+                shadow: false,
+                useHTML: true,
+                hideDelay: 0,
+                shared: true,
+                padding: 0,
+                positioner: function(w, h, point) {
+                    return {
+                        x: point.plotX - w / 2,
+                        y: point.plotY - h
+                    };
+                }
+            },
+            plotOptions: {
+                series: {
+                    animation: false,
+                    lineWidth: 1,
+                    shadow: false,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    marker: {
+                        radius: 1,
+                        states: {
+                            hover: {
+                                radius: 2
+                            }
+                        }
+                    },
+                    fillOpacity: 0.25
+                },
+                column: {
+                    color: '#75a5c2',
+                    negativeColor: '#b1493f',
+                    borderColor: 'silver'
+                }
+            }
+        };
+        options = Highcharts.merge(defaultOptions, options);
+
+        return new Highcharts.Chart(options, callback);
+    };
+
+    var start = +new Date(),
+        $tds = $("td[data-sparkline]"),
+        fullLen = $tds.length,
+        n = 0;
+
+    // Creating 153 sparkline charts is quite fast in modern browsers, but IE8 and mobile
+    // can take some seconds, so we split the input into chunks and apply them in timeouts
+    // in order avoid locking up the browser process and allow interaction.
+    function doChunk() {
+        var time = +new Date(),
+            i,
+            len = $tds.length,
+            $td,
+            stringdata,
+            arr,
+            data,
+            chart;
+
+        for (i = 0; i < len; i += 1) {
+            $td = $($tds[i]);
+            stringdata = $td.data('sparkline');
+            arr = stringdata.split('; ');
+            data = $.map(arr[0].split(', '), parseFloat);
+            chart = {};
+
+            if (arr[1]) {
+                chart.type = arr[1];
+            }
+            $td.highcharts('SparkLine', {
+                series: [{
+                    data: data,
+                    pointStart: 1
+                }],
+                tooltip: {
+                    headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', Q{point.x}:</span><br/>',
+                    pointFormat: '<b>{point.y}.000</b> USD'
+                },
+                chart: chart
+            });
+
+            n += 1;
+
+            // If the process takes too much time, run a timeout to allow interaction with the browser
+            if (new Date() - time > 500) {
+                $tds.splice(0, i + 1);
+                setTimeout(doChunk, 0);
+                break;
+            }
+
+            // Print a feedback on the performance
+            if (n === fullLen) {
+                $('#result').html('Generated ' + fullLen + ' sparklines in ' + (new Date() - start) + ' ms');
+            }
+        }
+    }
+    doChunk();
+}
+
+
+
+
+function usdeficit() {
+    addNote('在80年代至今的几位总统任内，只有比尔·克林顿实现了4年的联邦预算盈余。支持者认为这是克林顿和萨默斯经济政策的功劳，反对者认为他们只是占了互联网泡沫繁荣的光（见前一张互动图）。图中可以看出2001年的9·11和2008年金融危机对政府预算的巨大影响。数据来自国会预算办公室(CBO)。');
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: gChartId,
+            defaultSeriesType: 'area',
+            animation: {
+                duration: 500
+            }
+        },
+        title: {
+            text: '图III：81年以来的美联邦政府平均收支'
+        },
+        yAxis: {
+            title: {
+                text: '占GDP的百分比'
+            },
+            min: 14
+        },
+        plotOptions: {
+            area: {
+                pointStart: 1981,
+            }
+        },
+        series: [{
+            name: '联邦政府支出',
+            data: [22.2, 23.1, 23.5, 22.2, 22.8, 22.5, 21.6, 21.3, 21.2, 21.9, 22.3, 22.1, 21.4, 21.0, 20.6, 20.2, 19.5, 19.1, 18.5, 18.2, 18.2, 19.1, 19.7, 19.6, 19.9, 20.1, 19.7, 20.8, 25.2, 24.1, 24.1, 22.8]
+        }, {
+            name: '联邦政府收入',
+            data: [19.6, 19.2, 17.5, 17.3, 17.7, 17.5, 18.4, 18.2, 18.4, 18.0, 17.8, 17.5, 17.5, 18.0, 18.4, 18.8, 19.2, 19.9, 19.8, 20.6, 19.5, 17.6, 16.2, 16.1, 17.3, 18.2, 18.5, 17.6, 15.1, 15.1, 15.4, 15.8]
+        }, ]
+    });
+}
+
+
+
+function houseandstock() {
+    addNote('股市经历了7个波动周期，其中上涨4个，下跌3个。而在这7个周期中，房价走势与之同步的有5个半。之所以会有半个周期，是因为在2014年的5-9月间，股市已开始回升，而房价还在缓慢下跌，随后两者又进入同步上升。');
+    $('#' + gChartId).highcharts({
+        title: {
+            text: '再谈股市与楼市关系'
+        },
+        xAxis: [{
+            categories: ['2005.05', '2005.06', '2005.07', '2005.08', '2005.09', '2005.10', '2005.11', '2005.12', '2006.01', '2006.02', '2006.03', '2006.04', '2006.05', '2006.06', '2006.07', '2006.08', '2006.09', '2006.10', '2006.11', '2006.12', '2007.01', '2007.02', '2007.03', '2007.04', '2007.05', '2007.06', '2007.07', '2007.08', '2007.09', '2007.10', '2007.11', '2007.12', '2008.01', '2008.02', '2008.03', '2008.04', '2008.05', '2008.06', '2008.07', '2008.08', '2008.09', '2008.10', '2008.11', '2008.12', '2009.01', '2009.02', '2009.03', '2009.04', '2009.05', '2009.06', '2009.07', '2009.08', '2009.09', '2009.10', '2009.11', '2009.12', '2010.01', '2010.02', '2010.03', '2010.04', '2010.05', '2010.06', '2010.07', '2010.08', '2010.09', '2010.10', '2010.11', '2010.12', '2011.01', '2011.02', '2011.03', '2011.04', '2011.05', '2011.06', '2011.07', '2011.08', '2011.09', '2011.10', '2011.11', '2011.12', '2012.01', '2012.02', '2012.03', '2012.04', '2012.05', '2012.06', '2012.07', '2012.08', '2012.09', '2012.10', '2012.11', '2012.12', '2013.01', '2013.02', '2013.03', '2013.04', '2013.05', '2013.06', '2013.07', '2013.08', '2013.09', '2013.10', '2013.11', '2013.12', '2014.01', '2014.02', '2014.03', '2014.04', '2014.05', '2014.06', '2014.07', '2014.08', '2014.09', '2014.10', '2014.11', '2014.12', '2015.01', '2015.02', '2015.03', '2015.04'],
+            crosshair: true,
+            plotLines: [{
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 29, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 41, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 59, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 62, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 65, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 77, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 107, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }, {
+                    color: '#2e6e9e', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: 113, // Value of where the line will appear
+                    width: 2 // Width of the line    
+                }
+
+            ]
+
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: '股指',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: '房价指数',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 80,
+            verticalAlign: 'top',
+            y: 0,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: '上证指数',
+            type: 'area',
+            data: [1061, 1081, 1083, 1163, 1156, 1093, 1099, 1161, 1258, 1299, 1298, 1440, 1641, 1672, 1613, 1659, 1752, 1838, 2099, 2675, 2786, 2881, 3184, 3841, 4110, 3821, 4471, 5219, 5552, 5955, 4872, 5262, 4383, 4349, 3473, 3693, 3433, 2736, 2776, 2397, 2294, 1729, 1871, 1821, 1991, 2083, 2373, 2478, 2633, 2959, 3412, 2668, 2779, 2996, 3195, 3277, 2989, 3052, 3109, 2871, 2592, 2398, 2638, 2639, 2656, 2979, 2820, 2808, 2791, 2905, 2928, 2912, 2743, 2762, 2702, 2567, 2359, 2468, 2333, 2199, 2293, 2428, 2263, 2396, 2372, 2225, 2104, 2048, 2086, 2069, 1980, 2269, 2385, 2366, 2237, 2178, 2301, 1979, 1994, 2098, 2175, 2142, 2221, 2116, 2033, 2056, 2033, 2026, 2039, 2048, 2202, 2217, 2364, 2420, 2683, 3235, 3210, 3310, 3748, 4442],
+            tooltip: {
+                valueSuffix: ''
+            }
+
+        }, {
+            name: '中原二手住宅价格指数',
+            type: 'spline',
+            yAxis: 1,
+            data: [119, 121, 120, 117, 119, 119, 123, 125, 125, 127, 133, 137, 140, 142, 143, 144, 147, 149, 153, 155, 158, 162, 166, 173, 179, 186, 193, 202, 210, 218, 219, 217, 216, 215, 215, 216, 218, 216, 213, 210, 204, 199, 195, 196, 195, 195, 199, 207, 216, 227, 235, 242, 248, 256, 264, 272, 274, 273, 279, 290, 284, 277, 274, 275, 282, 285, 288, 294, 304, 310, 313, 314, 314, 315, 315, 315, 316, 314, 312, 306, 299, 297, 300, 304, 307, 311, 316, 320, 325, 329, 334, 338, 344, 352, 361, 365, 369, 373, 378, 383, 392, 398, 403, 404, 405, 410, 413, 414, 412, 406, 403, 400, 397, 398, 398, 400, 402, 403, 407, 416],
+            tooltip: {
+                valueSuffix: ''
+            }
+        }]
+    });
+}
+
+function combinationChart001() {
+    addNote('组合图表');
+    //从highcharts.com上复制的代码，只需把第一行改为如下的代码就可以正常显示
+    $('#' + gChartId).highcharts({
+        title: {
+            text: 'Combination chart'
+        },
+        xAxis: {
+            categories: ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']
+        },
+        labels: {
+            items: [{
+                html: 'Total fruit consumption',
+                style: {
+                    left: '50px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                }
+            }]
+        },
+        series: [{
+            type: 'column',
+            name: 'Jane',
+            data: [3, 2, 1, 3, 4]
+        }, {
+            type: 'column',
+            name: 'John',
+            data: [2, 3, 5, 7, 6]
+        }, {
+            type: 'column',
+            name: 'Joe',
+            data: [4, 3, 3, 9, 0]
+        }, {
+            type: 'spline',
+            name: 'Average',
+            data: [3, 2.67, 3, 6.33, 3.33],
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            }
+        }, {
+            type: 'pie',
+            name: 'Total consumption',
+            data: [{
+                name: 'Jane',
+                y: 13,
+                color: Highcharts.getOptions().colors[0] // Jane's color
+            }, {
+                name: 'John',
+                y: 23,
+                color: Highcharts.getOptions().colors[1] // John's color
+            }, {
+                name: 'Joe',
+                y: 19,
+                color: Highcharts.getOptions().colors[2] // Joe's color
+            }],
+            center: [100, 80],
+            size: 100,
+            showInLegend: false,
+            dataLabels: {
+                enabled: false
+            }
+        }]
+    });
+}
+
+
+function worldPopulation() {
+    addNote('');
+    var data = [{
+        code: "CN",
+        z: 1357380
+    }, {
+        code: "IN",
+        z: 1252140
+    }, {
+        code: "ZW",
+        z: 14150
+    }];
+    //Highcharts.maps["custom/world"] = AsiaAfricaEurope;
+    //var mapData = Highcharts.geojson(Highcharts.maps['custom/AsiaAfricaEurope']);
+    var mapData = Highcharts.geojson(AsiaAfricaEurope);
+    console.log(mapData);
+    $('#' + gChartId).highcharts('Map', {
+        chart: {
+            borderWidth: 0
+        },
+
+        title: {
+            text: '一帶一路下的中國新秩序'
+        },
+
+        subtitle: {
+            text: '中國對外投資分布'
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        series: [{
+            name: 'Countries',
+            mapData: mapData,
+            color: '#E0E0E0',
+            enableMouseTracking: false
+        }, {
+            type: 'mapbubble',
+            mapData: mapData,
+            name: 'Population 2013',
+            joinBy: ['iso-a2', 'code'],
+            data: data,
+            minSize: 4,
+            maxSize: '12%',
+            tooltip: {
+                pointFormat: '{point.code}: {point.z} thousands'
+            }
+        }]
+    });
+}
+</script>
+
+</html>

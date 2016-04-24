@@ -1,0 +1,39 @@
+.n-home-course-container {
+	width: 25%;
+}
+.n-home-course-container.l-0 {
+	width: 75%;
+}
+.n-home-course-container.l-0:after {
+	padding-top: 2/3 * $homeCoursePicRatio;
+}
+.n-home-course-container.l-1:after {
+	padding-top: 3 * $homeCoursePicRatio;
+}
+.n-home-course-container.l-1 {
+	float: right; 
+}
+.n-home-course-container.l-5, .n-home-course-container.l-6, .n-home-course-container.l-7{
+	width: 33.33333333333333333%;
+}
+.n-home-course-container.l-8:after, .n-home-course-container.l-11:after {
+	padding-top: 2 * $homeCoursePicRatio;
+}
+.n-home-course-container.l-10, .n-home-course-container.l-12 {
+	width: 50%;
+}
+.n-home-course-container.l-10:after, .n-home-course-container.l-12:after {
+	padding-top: 1/2 * $homeCoursePicRatio;
+}
+.n-home-course-container.l-11 {
+	float: right;
+}
+.n-content-inner {
+	.clearfloat.l-12 {
+		display: block;
+		clear: left;
+	}
+	.clearfloat.l-4, .clearfloat.l-7, .clearfloat.l-15 {
+		display: block;
+	}
+}

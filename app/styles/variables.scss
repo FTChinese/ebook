@@ -1,0 +1,50 @@
+// colors
+$defaultBG: #FFF1E0;
+$defaultColor: #333333;
+$themeBG: #16a085;
+$placeHolderBG: #95a5a6;
+$lighterThemeBG: #2ecc71;
+$borderColor: #EFEFEF;
+$selectedBG: #777;
+$disabledBG: #777;
+$progressBG: #CCCCCC;
+$listBG: #3498db;
+$darkBG: #333333;
+$opaque: rgba(0,0,0,0.7);
+$barBG: #34495e;
+$batteryBG: white;
+$batteryUsedBG: #CCCCCC;
+$batteryAlertBG: red;
+
+// width, height and padding
+$headerHeight: 44px;
+$statusBarHeight: 20px;
+$buttonHeight: 36px;
+$batteryBodyHeight: 20px;
+$batteryTopHeight: 3px;
+$batteryWidth:14px;
+$batteryTopWidth: 4px;
+$progressHeight: 20px;
+$progressBarHeight: 8px;
+$sideButtonWidth: 52px;
+$gutterWidth: 5px;
+$padding: 14px;
+$maxWidth: 1280px;
+$optionIconWidth: 18px; 
+$svgIconWidth: 24px;
+
+// Percentages
+$defaultLineHeight: 168.1%;
+$homeCoursePicRatio: percentage(9/16);
+
+// Font Sizes
+$baseFontSize: 18px;
+$bigFontSize: 19px;
+$biggerFontSize: 20px;
+$largeFontSize: 21px;
+$h1FontSize: 1.2em;
+$h3FontSize: 1em;
+
+// score card display
+$scoreCardWidth: 150px;
+$scoreCardFontSize: 64px;

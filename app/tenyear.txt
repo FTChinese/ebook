@@ -1,0 +1,616 @@
+<!-- 如果您是制作新的HTML 5沉浸式报道，请直接跳到“所有内容开始” -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>特别报道</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon-precomposed" href="img/fticon.png" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <!-- build:css styles/main-demo.css -->
+    <link rel="stylesheet" href="styles/main-demo.css">
+    <!-- endbuild -->
+    <!-- Google Analytics -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'http://m.ftchinese.com/index.php/jsapi/analytics', 'ga');
+    ga('create', 'UA-1608715-1');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+</head>
+
+<body>
+    <div id="share-icon"><img src="http://s.ftimg.net/img/friend-share-icon.jpg" /></div>
+    <div id="o-rotate-note">
+        <div>旋转屏幕，查看精彩内容！</div>
+    </div>
+    <div id="screenstart" class=opening ontouchmove="event.preventDefault();"><span><p class=booklead id="startstatus">FT中文网特别报道</p><div class="progresscontainer instartscreen"><div id="startbar" class="progressbar standardprogressbar uses3d progressbg structureprogress"></div></div><p class=booklead id="loadstatus">&nbsp;</p></span>
+        <div class="backuplinks"><a onclick="javascript:window.location.reload()">重新加载</a></div>
+    </div>
+    <!--如果要出目录，就必须用到FTScroller-->
+    <div class="fullbody fruit landscapeImage" id="game">
+        <div id=swipe>
+            <div id=gamecontent>
+            </div>
+        </div>
+        <div class="tap pagedots"></div>
+        <div class="tap pagetitle"></div>
+        <div id="contentRail" style="">
+            <div class="-bg-checkered">
+                <div id="toolRail">
+                    <div class="nutmeg-content">
+                        <div class="nutmeg-content_left">
+                            <button onclick="jumptostory('contentpage')" class="button-menu"><span id='index-title'>目录</span></button>
+                        </div>
+                        <div class="nutmeg-content_right">
+                            <button onclick="setting()" class="nutmeg_settings-btn" aria-label="Settings"></button>
+                        </div>
+                        <div class="nutmeg-content_right rightmargin">
+                            <button onclick="setFontSize()" class="nutmeg_fontsize-btn" aria-label="Settings"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="imageRail">
+                <div id="imageRailInner"></div>
+            </div>
+        </div>
+        <div id=fontsetting class=overlay>
+            <div class=overlayBG></div>
+            <div class=inner>
+                <div class=cell>
+                    <div class=settingbox>
+                        <div class=overlay-header>
+                            <div class="nutmeg-content_right rightmargin">
+                                <button onclick="closeFontSize()" aria-label="Settings">确定</button>
+                            </div>
+                            设置字号
+                        </div>
+                        <div class="fontpreferences overlay-content">
+                            <div id=extra-small class=extra-small>最小<span class="tickbg"></span></div>
+                            <div id=small class=small>小<span class="tickbg"></span></div>
+                            <div id=medium class=medium>适中<span class="tickbg"></span></div>
+                            <div id=big class=big>大<span class="tickbg"></span></div>
+                            <div id=extra-big class=extra-big>特大<span class="tickbg"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id=setting class=overlay>
+            <div class=overlayBG></div>
+            <div class=inner>
+                <div class=cell>
+                    <div class=settingbox>
+                        <div class=overlay-header>
+                            <div class="nutmeg-content_right rightmargin">
+                                <button onclick="closeSetting()" class="overlay_close-btn" aria-label="Settings"></button>
+                            </div>
+                            设置与帮助
+                        </div>
+                        <div class="nightreading">
+                            <strong>夜间模式</strong>
+                            <span class="displayvalue" onclick="switchNightReading()">
+                        <span class="ui-toggle">
+                            <span class="ui-toggle-button"></span>
+                            <span class="ui-toggle-label ui-toggle-label-on">开</span>
+                            <span class="ui-toggle-label ui-toggle-label-off">关</span>
+                            </span>
+                            </span>
+                            <span class="description">在晚上切换为夜间阅读模式，可以减小对眼睛的压力，并节约电池</span>
+                        </div>
+                        <div class="bgpreferences overlay-content">
+                            <strong>自选背景</strong>
+                            <div id=pink>粉色<span class="tickbg"></span></div>
+                            <div id=white>白色<span class="tickbg"></span></div>
+                        </div>
+                        <div class="standalonebutton">
+                            <a href="mailto:ftchinese.feedback@gmail.com?subject=Feedback on FT HTML 5 Story" id="feedbackEmail">
+                                <button class="ui-light-btn">反馈问题</button>
+                            </a>
+                        </div>
+                        <div id="testMessage"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id=largepic class=overlay>
+            <div class=overlayBG></div>
+            <div class=inner>
+                <button class="cherry_button"></button>
+                <div class=cell>
+                </div>
+            </div>
+        </div>
+        <div id="allcontent" style="display:none;">
+
+
+
+
+
+
+        <!-- 所有内容开始-->
+
+<div class="slide layout-5 o-bg-style-dark" topic="封面" style="background-image: url(http://i.ftimg.net/picture/2/000053692_piclink.jpg);">
+    <div class="page animated slow fadeIn">
+        <h1 class="story-title text-inner normal" style="line-height:1.2em;">FT中文网10周年回顾</h1>
+        <h2 class="story-heading text-inner small">此刊记录了FT中文网十年成长历程<br>（2005-2015）</h2>
+    </div>
+</div>
+<div class="slide contentpage" topic="目录" storyid="contentpage">
+    <div class=page>
+        <div class="header notouchall">
+            <div class="navleftcontainer notouchall" onclick="sectionScroller.scrollBy(-$(window).width(), 0,300);return false;">
+                <div class="subleftbg notouchall"></div>
+            </div>
+            <div class="navrightcontainer notouchall" onclick="sectionScroller.scrollBy($(window).width(), 0,300);return false;">
+                <div class="subrightbg notouchall"></div>
+            </div>
+            <div class="navigationScroller notouchall">
+                <ul class="navigation notouchall"></ul>
+            </div>
+        </div>
+        <div class=theContent>
+            <div class="tint-pink" id=coverintro>
+                <div class="tint-inner">
+                    <!-- 全书的名字 -->
+                    <div style="line-height:100%;margin:0 0 15px 0;padding:0;font-weight:bold;font-size:25px;">关于FT中文网</div>
+                    <!-- 图片 -->
+                    <img src="http://i.ftimg.net/picture/2/000053692_piclink.jpg" />
+                    <br>
+                    <!-- 说明 -->
+                    FT中文网是英国《金融时报》集团出品的中文商业财经网站。2005年8月31日，FT中文网正式推出。凭借英国《金融时报》遍布全球的丰富报道资源，FT中文网深入分析对中国经济和全球商业具有影响力的重大事件，并揭示事件的来龙去脉，以真正富有国际视野的权威报道成为中国高级管理人员“必读”的商业财经资讯网站。目前，FT中文网拥有逾230 万注册用户，移动产品已覆盖iOS、Android和Windows系统。同时，FT中文网不断扩展其在商业教育领域的服务，2012年推出教育类付费产品FT中文网商学院iPad应用程序，入选为“App Store 2012年度精选”。
+                </div>
+            </div>
+            <div class="scrollPage">
+                <div class="container">
+                    <div class="contentcategory"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" title="2005－2007年" lead="FT中文网的成立与SOPA首奖" topic="十周年发展历程" style="background-image: url(http://i.ftimg.net/picture/9/000053759_piclink.jpg);">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-right animated fadeIn">
+            <p>英国《金融时报》中文网于2005年8月31日举办运营启动派对活动，宣告FT中文网正式推出。
+                <p>2006年12月，荣获《南方周末》“年度最具成长性媒体奖”；并首次举办FT中文网主编读者见面会。</p>
+                <p>2007年5月，资深记者魏城荣获“亚洲出版人协会(SOPA)解释报道类首奖”。12月，被《新周刊》评为“年度传媒网站”。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2008年
+                </div>
+                <div class=lead>首届中国年度论坛在京举行</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/8/000054018_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>6月，时任中国国务院副总理王岐山为FT撰文，发表署名文章《加强中美节能环保合作》，同期刊登在FT中文网。</p>
+            <p>6月，专栏作家许知远荣获“亚洲出版人协会(SOPA)评论写作类首奖”。</p>
+            <p>12月，首届中国年度论坛在北京举行，主题为“机遇与挑战：中国的新征途”。FT中文网以此为起点在北京、上海、宁夏、山东、四川、辽宁等地打造出FT国际金融论坛、中阿金融合作论坛、FT商界名家沙龙、FT读者俱乐部等多个活动品牌，为中国商务精英阶层提供一流的社交平台，助力合作伙伴实现品牌和产品的精准营销。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2009年
+                </div>
+                <div class=lead>网站焕然一新</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/6/000053796_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>3月，美国总统奥巴马于3月31日接受英国《金融时报》专访，同期刊登在FT中文网。奥巴马说“我比其他人更早阅读英国《金融时报》，从上世纪80年代在芝加哥就开始了。如今，这已成为一种时髦，每个人手里都握着一份。”</p>
+            <p>3月，推出“午后速递”邮件订阅，将每日午后重要的财经资讯直接送达到读者的邮箱。</p>
+            <p>3月，艾瑞新经济奖授予FT中文网 “2008-2009年度中国最佳成长互联网企业奖--商业管理类”。</p>
+            <p>6月，推出手机站（m.ftchinese.com），免费呈现每日全部内容，方便读者随时随地查询每日“必读”的资讯。</p>
+            <p>6月，专栏作家丁学良荣获“亚洲出版人协会 (SOPA) 专题特写类首奖”。</p>
+            <p>8月，FT中文网总经理张延女士荣获艾瑞市场咨询集团颁发的“2009中国互联网新营销先锋人物奖”。</p>
+            <p>9月，首场Lunch with the FT活动在北京举行。包括中国银行副行长朱民及招商局集团主席秦晓在内的十余位国内外知名企业家作为活动联合发起人参与了此次午餐讨论。</p>
+            <p>9月，时任中国国务院副总理王岐山为FT撰文，发表署名文章《加强中英经济财金对话》，同期刊登在FT中文网。</p>
+            <p>10月，FT中文网于2009年10月12日成功改版，提供更完善的用户体验、更丰富的财经资讯与互动社区服务。</p>
+            <p>11月，FT中国年度论坛首次在青岛举办，主题为“中国力量：见证巨龙的步伐”。 </p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" data-fixed-bg="http://i.ftimg.net/picture/8/000053758_piclink.jpg">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-right animated fadeInDown">
+            <p>时任中国国务院总理温家宝于2009年2月在伦敦接受英国《金融时报》主编Lionel Barber独家专访, 就中国应对国际金融危机及保持经济平衡较快发展等问题进行了交流，FT中文网前任总编辑张力奋先生陪同参与。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2010年
+                </div>
+                <div class=lead>推出首款数字产品</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/8/000053798_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>2月，FT中文网新浪微博官方账号上线。</p>
+            <p>4月，FT中文网腾讯微博官方账号上线。</p>
+            <p>5月，FT国际金融论坛落户青岛，并连续三年成功举办。</p>
+            <p>6月，专栏作家吴晓波荣获“亚洲出版人协会(SOPA)商业报道类荣誉奖”。</p>
+            <p>10月，推出首款数字产品——FT中文网iPad应用程序。</p>
+            <p>11月，FT中国年度论坛首次在上海举行，主题为“2020：中国和世界的新纪元”。</p>
+            <p>12月，荣获中国金融与财媒高峰论坛“2009年度最具影响力财经媒体奖”。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2011年
+                </div>
+                <div class=lead>推出FT中文网iPhone和Android应用程序</div>
+                <div class=datestamp></div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/9/000053799_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>1月，联合中央电视台财经频道、德国罗兰贝格管理咨询公司在瑞士达沃斯世界经济论坛2011年会上发布“2010年最佳在华外资企业榜”。</p>
+            <p>3月，iPad应用程序荣登苹果应用程序商店(App Store)新闻类免费应用程序排行榜第一名。</p>
+            <p>5月，繁体中文版正式上线。</p>
+            <p>6月，专栏作家老愚荣获“2011年度亚洲出版人奖(SOPA Awards)年度卓越评论奖”。</p>
+            <p>6月，时任中国国务院总理温家宝为FT撰文，发表署名文章《温家宝：物价将稳步下降》，同期刊登在FT中文网。</p>
+            <p>6月，2011年英国《金融时报》青岛国际金融高峰论坛在青岛举行，主题是中国经济的“开局 转型 优质增长”。</p>
+            <p>6月，同步推出苹果版和安卓版手机应用程序，让读者在各个移动设备平台上都得到最好的阅读体验。 </p>
+            <p>9月，与达沃斯论坛达成战略联盟，首次作为官方媒体合作伙伴对会议全程进行全面报道。</p>
+            <p>9月，首度承办“中阿合作论坛——国际经济贸易分会”</p>
+            <p>11月，年度中国高峰论坛在上海举行，主题为中国经济“挑战与超越”。</p>
+            <p>11月，英国《金融时报》“巅峰女性”高峰会议首次在上海举办，并成功发布2011年度“全球商界女性50强”榜单。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2012年
+                </div>
+                <div class=lead>推出教育类付费产品FT中文网商学院iPad应用程序</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/9/000053819_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>3月，推出首款付费iPad应用程序“FT商学院”，同年，入选“App Store 2012年度精选”。</p>
+            <p>5月，推出“乐尚街”奢侈品版块，旨在为中国读者带来新鲜的奢侈品行业资讯和时尚潮流，开启通往国际高端设计风尚的一扇窗。</p>
+            <p>6月，2012年英国《金融时报》青岛国际金融高峰论坛在青岛举行，主题是中国经济的“蓝色战略·智慧增长”。</p>
+            <p>6月，首届中国新媒体峰会在杭州举行，FT中文网入选“中国新媒体30强”榜单，并名列“中国传媒创新榜”。</p>
+            <p>8月，腾讯微博粉丝超过百万。新浪微博、腾讯微博等社交平台粉丝总量超过280万。</p>
+            <p>9月，2012中阿金融合作分会在银川举行。</p>
+            <p>10月，首场读者俱乐部活动在北京举行，主题为“对话黄怒波——我的路，从官场到商场”。</p>
+            <p>10月，作为微软重点合作伙伴，与微软同步推出Windows 8 应用程序。</p>
+            <p>11月，年度中国高峰论坛在北京举行，主题为“时局与前瞻：变革中的抉择”。</p>
+            <p>12月，官方微信正式开通，微信号为ftcweixin。</p>
+            <p>12月，FT中文网商学院iPad应用程序入选“App Store 2012年度精选”(App Store Best of 2012)</p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" data-fixed-bg="http://i.ftimg.net/picture/2/000053862_piclink.jpg">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-right animated fadeInLeft">
+            <p>英国《金融时报》中国年度高峰论坛于2012年11月2日在北京举行，主题为“时局与前瞻：变革中的抉择”。 著名经济学家、原世界银行副行长林毅夫出席论坛并发表主旨演讲，他表示全球经济将面临大衰退，以国际上关注的欧债危机问题来看，南欧国家亟需进行提高生产竞争力的结构性改革。
+            </p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2013年
+                </div>
+                <div class=lead>FT名家沙龙在英国驻华大使官邸举行</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/0/000053820_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>1月，FT中文网商学院iPad App入选App Store新手指南“商务类”应用程序推荐名单。</p>
+            <p>2月，英国《金融时报》于2月13日正式展开125周年全球庆祝活动。</p>
+            <p>3月，读者俱乐部活动在上海举行，主题是“可怕的市场周期”。</p>
+            <p>3月，FT名家沙龙 （Tea with the FT）在英国驻华大使官邸举行，主题是“洞悉世界经济前景”。</p>
+            <p>4月，成为HTC One手机首批BlinkFeed合作伙伴。 </p>
+            <p>6月，专栏作家徐达内荣获“亚洲出版人协会(SOPA)评论写作荣誉奖”。</p>
+            <p>9月，2013中阿博览会金融合作论坛在银川举行。</p>
+            <p>9月，现任中国国务院总理李克强为FT撰文，发表署名文章《中国将继续持续发展之路》，同期刊登在FT中文网。</p>
+            <p>11月，年度中国高峰论坛在北京举行，主题是“时局与前瞻：中国经济的平衡与突破”。</p>
+            <p>11月，推出“FT论坛志”Web App，建立会议活动信息数字化发布平台。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2014年
+                </div>
+                <div class=lead>中国网球公开赛全球核心媒体合作伙伴</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/1/000053821_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>1月，英国《金融时报》正式推出三星智能电视应用程序。</p>
+            <p>2月，全年承办12场“中关村国际化大讲堂”，助力中国企业走出去。</p>
+            <p>3月，官方微信入选“首届最具影响力财经微信公众号”，荣登媒体类第三名。</p>
+            <p>4月，在博鳌亚洲论坛期间，FT中文网与《博鳌观察》杂志联合主办“博鳌观察之夜”活动，并共同发布《亚洲百强企业影响力年度报告》。</p>
+            <p>5月，Android平板应用程序进驻小米应用商店，成为小米平板问世当日，首批进驻的100个应用程序之一。</p>
+            <p>6月，前任总编辑张力奋荣获 “亚洲出版人协会 (SOPA) 专题特写类荣誉奖”，获奖作品是 《与FT共进午餐：陈小鲁》 。</p>
+            <p>9月，英国 《金融时报》 报纸全新改版，采用由屡获殊荣的设计师Kris Sowersby设计的“Financier”字体，与网络版更紧密衔接。</p>
+            <p>9月，在上海举行“FT私人董事会沙龙”。</p>
+            <p>9月，2014中国网球公开赛在国家网球中心举行。FT中文网是此项赛事的全球核心媒体合作伙伴。</p>
+            <p>10月， 作为2014摩根大通企业竞跑赛的独家网络媒体合作伙伴，FT中文网以最大团队阵容携手合作伙伴参加本届赛事。并荣获本次大赛T恤设计大奖，将所获1,000美元奖金全部捐献给爱佑慈善基金会。</p>
+            <p>11月，APEC工商领导人峰会在北京举办，英国《金融时报》和FT中文网作为媒体合作伙伴受邀参会。</p>
+            <p>11月，第七届英国《金融时报》年度中国高峰论坛在北京举行，活动主题为“时局与前瞻：寻找中国经济增长新动力”。 </p>
+            <p>12月，FT中文网携手蜻蜓FM共同推出《FT商学院电台》频道，每周三更新。</p>
+        </div>
+    </div>
+</div>
+<div class="slide list">
+    <div class="page article">
+        <div class="articleviewport">
+            <div class="articletarget"></div>
+        </div>
+        <div class="fixedContent">
+            <div class="articleinfo">
+                <div class=headline>
+                    2015年
+                </div>
+                <div class=lead>推出Kindle版中文电子书《与FT共进午餐》</div>
+                <!-- large代表这个图片可以点击放大 -->
+                <!-- headshot代表这个图片放置在第二栏的底部 -->
+                <img class="headshot" src="http://i.ftimg.net/picture/7/000054017_piclink.jpg" />
+            </div>
+        </div>
+        <!-- flowedContent中的内容会自动分页分栏排版，适应各种屏幕 -->
+        <div class="flowedContent">
+            <p>1月，在《互联网周刊》发布的2014年APP排行榜中，FT中文网新闻客户端荣膺财经类第二名。</p>
+            <p>2月，英国《金融时报》任命王丰为FT中文网总编辑，并于四月正式上任。前任总编辑张力奋在担任FT中文网总编辑十年后卸任，并继续担任FT中文网专栏作家以及荣誉创刊总编辑。</p>
+            <p>3月，中央电视台新闻联播《数字两会》提到FT中文网对两会中国政府工作报告的深度解读，将1万8千字报告浓缩成54个段落，制作成长微博，并引起网友大量转发。</p>
+            <p>3月，十二届全国人大三次会议闭幕后，现任中国国务院总理李克强在人民大会堂会见中外记者，并回答记者提出的问题。主持人点名英国《金融时报》记者首个提问，问题是关于中国人在海外置业以及政府是否会出台新政来促进国内房地产市场。</p>
+            <p>3月，中国国务院李克强会见出席中国发展高层论坛2015年年会境外代表并座谈，英国《金融时报》首席经济评论员马丁·沃尔夫参加座谈会议。</p>
+            <p>3月，中国国务院总理李克强在人民大会堂会见英国《金融时报》总编Lionel Barber，当晚中央电视台《新闻联播》报道本次会面。 专访文章同期刊登在FT中文网。</p>
+            <p>4月，推出首套Kindle版中文电子书《与FT共进午餐》。自推出，便荣登“人物传记”类榜单的榜首，最高名列“Kindle商店付费排行榜”第8名。</p>
+            <p>5月，携手埃森哲在北京成功举办“数字企业.无极限”圆桌论坛。</p>
+            <p>6月，荣获“亚洲出版业协会(SOPA) 评论写作类”两项大奖。专栏作家笑蜀与吴伟分别荣获“最佳评论奖”与“评论荣誉奖”。</p>
+            <p>6月，由浙江省人民政府主办，浙江省商务厅、英国《金融时报》承办的第17届浙江投资贸易洽谈会主场活动—“之江峰会”在宁波成功举办。</p>
+            <p>6月，FT中文网联合榕树根儿童教育机构，在京东众筹平台，共同发起“世界因你而变”特别版公益众筹活动，帮助景颇族的小艺术家们走出大山。6月27日，10万元众筹目标达成。</p>
+            <p>7月，推出“十年十人”活动，邀请读者与我们分享过去10年的个人成长故事，从职场、创业、进修、或公益等方面分享成功经验与感悟。本次活动评选出10位读者作为FT中文网10周年活动的代言人。</p>
+            <p>8月，推出智库类付费产品“FT研究院”。基于百万读者的大样本调研数据，同时广泛汲取公开数据资源，《FT研究院》专注热点财经问题及重要行业发展趋势的研究，致力于为广大读者提供贴近商业实况的前瞻性分析与洞察。</p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" data-fixed-bg="http://i.ftimg.net/picture/7/000053827_piclink.jpg">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-left animated fadeInDown">
+            <p>中国国务院总理李克强于2015年3月在人民大会堂会见英国《金融时报》总编Lionel Barber。三篇专访文章《李克强接受FT专访实录》、《李克强：中国无意挑战国际秩序》与《巴伯采访日记：李克强的鲶鱼策略》同期刊登在FT中文网。</p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" topic="2015年特别策划" title="世界因你而变" style="background-image: url(http://i.ftimg.net/picture/4/000054064_piclink.jpg)">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-left animated fadeInDown">
+            <p>榕树根在2011年获得了第一笔来自外界的资金，即FT中文网“世界因你而变”公益金。今年恰逢FT中文网10周年，两方再次聚首，联合发起众筹活动，并实现目标，帮助榕树根景颇族小艺术家北京游学展演成行。</p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" title="十年十人" style="background-image: url(http://i.ftimg.net/picture/5/000054065_piclink.jpg)">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-left animated fadeInDown">
+            <p>同年推出“十年十人”活动，邀请读者与我们分享过去10年的个人成长故事，从职场、创业、进修、或公益等方面分享成功经验与感悟，重拾每段历程的精彩，传递正能量。本次活动评选出10位读者作为FT中文网10周年活动的代言人。</p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5 o-bg-style-dark" title="FT研究院" style="background-image: url(http://i.ftimg.net/picture/3/000054063_piclink.jpg)">
+    <div class="page">
+        <div class="o-block o-text-block o-bottom o-right animated fadeInDown">
+            <p>在FT中文网成立十周年之际，正式推出全新频道——FT研究院。立足于FT中文网逾235万会员的大样本调研数据，广泛汲取公开数据资源，专注研究热点财经问题及重要行业发展趋势，致力于为读者提供贴近商业实况的前瞻性分析与洞察。</p>
+            <p>FT研究院不定期发布基于财经热点、重点行业发展趋势的分析文章、免费研究报告及付费研究报告。研究课题涵盖：投资理财策略，奢侈品行业、航空业、酒店业、汽车业、互联网金融等多个行业。</p>
+        </div>
+    </div>
+</div>
+<div class="slide layout-5">
+    <div class=page>
+        <img class="coverImage animated zoomIn slow delay-1n" src="http://i.ftimg.net/picture/4/000053834_piclink.jpg">
+        <p class="animated fadeInRight" style="font-size:30px;text-align:center;text-indent:0;margin-bottom: 14px;">全球财经资讯</p>
+    </div>
+</div>
+
+
+
+
+
+
+            <!-- 所有内容结束 -->
+        </div>
+        <!--在固定在页面的元素-->
+        <div class="wheel-container animated running fadeInUpToggle">
+            <div id="o-wheel" class="wheel rotate"></div>
+        </div>
+        <script>
+        var wheelObject = document.getElementById("o-wheel");
+        </script>
+        <!--在固定在页面的元素-->
+        <div id=allads>
+            <div id="fullpageads" startPage="0" everyPage="5">
+                <!-- 全屏广告素材
+                <div class="slide layout-5 fullpagead" style="background:#000;">
+                    <div class="page">
+                        <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/datejustii.jpg">
+                    </div>
+                </div>
+                <div class="slide layout-5 fullpagead" style="background:#000;">
+                    <div class="page">
+                        <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/yachtmasterii.jpg">
+                    </div>
+                </div>
+                <div class="slide layout-5 fullpagead" style="background:#000;">
+                    <div class="page">
+                        <img class="coverImage" src="http://m.ftchinese.com/lunch/picture/ad/daydate.jpg">
+                    </div>
+                </div>
+                全屏广告素材结束-->
+            </div>
+            <div id="mpuads">
+                <!-- MPU广告素材
+                <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/p.gif">
+                </div>
+                <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/YMII_300x250_FT.jpg">
+                </div>
+                <div class="mpuad">
+                    <img src="http://m.ftchinese.com/lunch/picture/mpu/datejust_FT_300x250.jpg">
+                </div>
+                <div class="mpuad">
+                    <div class="MPU tint-orange">HTML5 MPU</div>
+                </div>
+                -- MPU广告素材结束-->
+            </div>
+        </div>
+</body>
+<script>
+function isIE() {
+    return ((navigator.appName == 'Microsoft Internet Explorer') || ((navigator.appName == 'Netscape') && (new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null)));
+}
+
+//如果是IE，不管是什么版本，都中止程序
+if (isIE() === true) {
+    document.body.innerHTML = '<h1>亲爱的用户，我们发现您使用了IE浏览器！这会给您带来严重的安全隐患！请改用Chrome或FireFox等现代浏览器来浏览FT中文网的精彩内容！</h1>';
+}
+</script>
+<script>
+document.getElementById("startbar").style.width = "5%";
+</script>
+<!-- build:js scripts/demo.js -->
+<!-- bower:js -->
+<script src="../bower_components/ftscroller/lib/ftscroller.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/fastclick/lib/fastclick.js"></script>
+<script src="../bower_components/ftcolumnflow/src/FTColumnflow.js"></script>
+<script src="../bower_components/highcharts/highcharts.js"></script>
+<script src="../bower_components/highcharts/highcharts-more.js"></script>
+<script src="../bower_components/highmaps/modules/map.js"></script>
+<script src="../bower_components/highmaps/modules/data.js"></script>
+<script src="scripts/swipebook.js"></script>
+<script src="scripts/main.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<script src="http://s.ftimg.net/h5/map/AsiaAfricaEurope.js"></script>
+<script language=javascript>
+$(function() {
+    var firstImage = $('#allcontent .slide').eq(0).css('background-image') || '';
+    var img = new Image();
+    firstImage = firstImage.replace(/^url\(/g, '').replace(/\)$/g, '');
+    if (firstImage !== '' && firstImage !== 'none') {
+        img.src = firstImage;
+        img.onload = function() {
+            openbook();
+        };
+    } else {
+        openbook();
+    }
+    new FastClick(document.body);
+});
+</script>
+<script language=javascript>
+<!--Animation函数-->
+function playFunction(thefunction) {
+    switch (thefunction) {
+        case 'obor_nonFinancialExport':
+            obor_nonFinancialExport();
+            break;
+        case 'obor_export':
+            obor_export();
+            break;
+        case 'oborSparkline':
+            oborSparkline();
+            break;
+        case 'houseandstock':
+            houseandstock();
+            break;
+        case 'combinationChart001':
+            combinationChart001();
+            break;
+        case 'worldPopulation':
+            worldPopulation();
+            break;
+    }
+}
+
+</script>
+
+</html>

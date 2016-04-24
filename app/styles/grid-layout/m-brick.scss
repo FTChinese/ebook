@@ -1,0 +1,21 @@
+//brick layout style for middle sized devices
+.n-home-course-container.m-0 {
+	width: 100%;
+}
+.n-home-course-container.m-0:after {
+	padding-top: 1/2 * $homeCoursePicRatio;
+}
+.n-home-course-container.m-4, .n-home-course-container.m-5, .n-home-course-container.m-6, .n-home-course-container.m-10, .n-home-course-container.m-11, .n-home-course-container.m-12 {
+	width: 50%;
+}
+.n-home-course-container.m-4:after, .n-home-course-container.m-10:after {
+	padding-top: 2 * $homeCoursePicRatio;
+}
+.n-home-course-container.m-10 {
+	float: right;
+}
+.n-content-inner {
+	.clearfloat.m-6, .clearfloat.m-12, .clearfloat.m-15 {
+		display: block;
+	}
+}

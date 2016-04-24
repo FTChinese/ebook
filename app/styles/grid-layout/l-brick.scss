@@ -1,0 +1,26 @@
+	.n-home-course-container {
+		width: 25%;
+	}
+	.n-home-course-container.l-0 {
+		width: 100%;
+	}
+	.n-home-course-container.l-0:after {
+		padding-top: 1/2 * $homeCoursePicRatio;
+	}
+	.n-home-course-container.l-1:after, .n-home-course-container.l-2:after {
+		padding-top: 2/3 * $homeCoursePicRatio;
+	}
+	.n-home-course-container.l-1, .n-home-course-container.l-2 {
+		width: 50%;
+	}
+	.n-home-course-container.l-3, .n-home-course-container.l-4, .n-home-course-container.l-5, .n-home-course-container.l-13, .n-home-course-container.l-14, .n-home-course-container.l-15 {
+		width: 33.33333333333333333%;
+	}
+	.n-home-course-container.l-6:after {
+		padding-top: 2 * $homeCoursePicRatio;
+	}
+	.n-content-inner {
+		.clearfloat.l-2, .clearfloat.l-5, .clearfloat.l-12, .clearfloat.l-15 {
+			display: block;
+		}
+	}

@@ -1,0 +1,119 @@
+.is-current .animated, .animated.running {
+  @include vendor-prefix("animation-play-state", "running");
+  @include vendor-prefix("animation-fill-mode", "both");
+}
+
+.animated {
+  @include vendor-prefix("animation-duration", "1s");
+  @include vendor-prefix("animation-fill-mode", "both");
+  @include vendor-prefix("animation-play-state", "paused");
+}
+.animated.slow {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+}
+.animated.delay-300 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+}
+.animated.delay-1 {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
+.animated.delay-1-5 {
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
+}
+.animated.delay-2 {
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+.animated.delay-2-5 {
+  -webkit-animation-delay: 2.5s;
+          animation-delay: 2.5s;
+}
+.animated.delay-3 {
+  -webkit-animation-delay: 3s;
+          animation-delay: 3s;
+}
+.animated.delay-3-5 {
+  -webkit-animation-delay: 3.5s;
+          animation-delay: 3.5s;
+}
+.animated.delay-4 {
+  -webkit-animation-delay: 4s;
+          animation-delay: 4s;
+}
+.animated.delay-4-5 {
+  -webkit-animation-delay: 4.5s;
+          animation-delay: 4.5s;
+}
+.animated.delay-5 {
+  -webkit-animation-delay: 5s;
+          animation-delay: 5s;
+}
+.animated.delay-5-5 {
+  -webkit-animation-delay: 5.5s;
+          animation-delay: 5.5s;
+}
+.animated.delay-6 {
+  -webkit-animation-delay: 6s;
+          animation-delay: 6s;
+}
+.animated.delay-6-5 {
+  -webkit-animation-delay: 6.5s;
+          animation-delay: 6.5s;
+}
+.animated.delay-7 {
+  -webkit-animation-delay: 7s;
+          animation-delay: 7s;
+}
+.animated.slow {
+    -webkit-animation-duration: 5s;
+            animation-duration: 5s;
+}
+.animated.speed-medium {
+    -webkit-animation-duration: 1.5s;
+            animation-duration: 1.5s;
+}
+.animated.fadeOutGrey {
+    -webkit-animation: grey 5s 1 linear 3s both;
+            animation: grey 5s 1 linear 3s both;
+}
+
+@-webkit-keyframes marquee {
+  0%    { -webkit-transform: translate3d(0,450px,0); }
+  100%  { -webkit-transform: translate3d(0,-100%,0); }
+}
+@keyframes marquee {
+  0%    { transform: translate3d(0,450px,0); }
+  100%  { transform: translate3d(0,-100%,0); }
+}
+
+@-webkit-keyframes anmar {
+  0%    { -webkit-transform: translate3d(0,1380px,0); }
+  100%  { -webkit-transform: translate3d(0,-1380px,0); }
+}
+@keyframes anmar {
+  0%    { transform: translate3d(0,1380px,0); }
+  100%  { transform: translate3d(0,-1380px,0); }
+}
+
+@-webkit-keyframes rotate {
+  0%    { -webkit-transform: rotate(0deg); }
+  100%  { -webkit-transform: rotate(360deg); }
+}
+@keyframes rotate {
+  0%    { -webkit-transform: rotate(0deg); }
+  100%  { -webkit-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes grey {
+  0%    { opacity:1; }
+  100%  { opacity: 0.08; }
+}
+
+@keyframes grey {
+  0%    { opacity:1; }
+  100%  { opacity: 0.08; }
+}

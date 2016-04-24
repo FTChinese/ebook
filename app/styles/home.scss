@@ -1,0 +1,484 @@
+
+// nested style is not recommended as it bloats the output code
+
+// the content full body
+.n-content-container, .n-course-container, .n-page {
+	width:100%;
+	max-width: 1280px;
+	position: absolute;
+	margin: auto;
+	top: $headerHeight;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	background-color: white;
+	@include transition(all 0.5s ease-in-out);
+	@include backface-visibility(hidden);
+}
+.n-content-scroller {
+	width: 100%;
+	height: 100%;
+	.clearfloat {
+		display: none;
+	}
+}
+.n-content-container {
+	@include transform(translate3d(0, 0, 0));
+}
+
+
+// in the course
+.n-in-course {
+	.n-content-container {
+		@include transform(translate3d(-100%, 0, 0));
+	}
+	.n-course-container {
+		@include transform(translate3d(0, 0, 0));
+	}
+}
+
+.n-course-container {
+	@include transform(translate3d(100%, 0, 0));
+	.n-course-inner, .n-page-inner {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+	}
+}
+
+.n-page {
+	top: $progressHeight;
+	display:none;
+	padding-bottom: $padding + $buttonHeight; 
+	overflow: hidden;
+}
+.n-page.n-page-on, .n-page.n-page-next, .n-page.n-page-prev {
+	display:block;
+}
+.n-page.n-page-next {
+	@include transform(translate3d(100%, 0, 0));
+}
+.n-page.n-page-prev {
+	@include transform(translate3d(-100%, 0, 0));
+}
+.n-page-title {
+	line-height: $defaultLineHeight;
+	margin: 0;
+	padding: 0 $padding;
+}
+h1.n-page-title {
+	font-size: $h1FontSize;
+}
+h3.n-page-title {
+	font-size: $h3FontSize;
+}
+.n-page-lead {
+	padding: 0 $padding; 
+	ul {
+		padding-left: 1em;
+	}
+	.n-wrong-point {
+		color: red;
+	}
+	.n-right-point {
+		color: green;
+	}
+}
+.n-page-point {
+	display: none; 
+}
+.n-page-explain {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: $listBG;
+	padding: $gutterWidth;
+	color: white;
+	display: none;
+}
+.n-list-container {
+	padding: $padding;
+	//position: relative;
+}
+.n-list {
+
+}
+.n-list-title{
+	font-weight: bold;
+	@include vendor-prefix("border-radius", "5px");
+	background-color: $listBG;
+	color: white;
+	margin: $padding 0;
+	padding: $padding;
+}
+.n-list-text-container {
+	display:none;
+	position: absolute;
+	width:100%;
+	height:100%;
+	top: 0;
+	left: 0;
+}
+.n-list-BG {
+	width:100%;
+	height:100%;
+	background: $opaque;
+}
+.n-list-text-inner {
+	position: relative;
+	width:100%;
+	height:100%;
+}
+.n-list-text {
+	position: absolute;
+	margin: auto;
+	top: $padding;
+	bottom: $padding;
+	left: $padding;
+	right: $padding;
+	max-width: 550px;
+	max-height: 550px;
+	background-color: white;
+}
+.n-list-text-title {
+	background-color: $listBG;
+	color: white;
+	padding:$padding;
+	position: relative;
+}
+.n-list-close {
+	position: absolute;
+	height: 100%;
+	width: 2 * $padding + $svgIconWidth;
+	right: 0;
+	top:0;
+	padding: 0 $padding;
+	background-image: url(../images/ic_close_24px.svg);	
+	background-repeat: no-repeat;
+	background-position: $padding center;
+}
+.n-list-text-content {
+	padding:$padding;
+}
+.n-list.on {
+	.n-list-text-container {
+		display: block;
+	}
+}
+.done {
+	.n-page-explain {
+		display: block;
+	}
+}
+span.good {
+	color: green;
+}
+span.bad {
+	color: red;
+}
+.n-home-course-inner {
+	border-bottom-width: 0;
+	background-color: transparent;
+}
+.n-option:first-child {
+	border-width: 0;
+}
+.n-option {
+	border-top: 1px solid $borderColor;
+	padding: $padding $padding $padding $optionIconWidth + 2 * $padding;
+	background-repeat: no-repeat;
+	background-position: $padding center;
+	background-image: url(../images/ic_radio_button_off_24px.svg);
+	background-size: $optionIconWidth $optionIconWidth;
+	cursor: pointer;
+}
+.n-option.selected {
+	background-color: $selectedBG;
+	color: white;
+	background-image: url(../images/ic_radio_button_on_24px.svg);
+}
+.n-option.is-correct {
+	background-color: $lighterThemeBG;
+	color: white;
+	background-image: url(../images/ic_radio_white_24px.svg);	
+}
+.n-option.selected.is-correct {
+	background-color: $lighterThemeBG;
+	background-size: 48px 48px;
+	background-position: 0 center;
+	background-image: url(../images/ic_check_24px.svg);	
+}
+.n-option.selected.is-wrong {
+	background-color: red;
+	background-size: 48px 48px;
+	background-position: 0 center;
+	background-image: url(../images/ic_close_24px.svg);	
+}
+.n-page-true-false {
+	.n-page-explain {
+		bottom: 2 * $padding + 100;
+	}
+}
+.n-true-false-container{
+	position: absolute;
+	width: 230px;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	bottom: $padding;
+	padding: 0 $padding;
+	//background-color: $trueBG;
+}
+.n-true, .n-false {
+	width:100px;
+	height: 100px;
+	line-height: 100px;
+	text-align: center;
+	border-style: solid;
+	border-color: $defaultBG;
+	background-color: $selectedBG;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: $gutterWidth $gutterWidth;
+	color: white;
+}
+.n-true.selected, .n-false.selected {
+	background-image: url(../images/ic_check_24px.svg);
+}
+.n-true.selected {
+	background-position: right 5px top 5px;
+}
+.n-true.is-correct, .n-false.is-correct {
+	background-color: $lighterThemeBG;
+}
+.n-true.selected.is-correct, .n-false.selected.is-correct {
+	background-color: $lighterThemeBG;
+}
+.n-true.selected.is-wrong, .n-false.selected.is-wrong {
+	background-color: red;
+	background-image: url(../images/ic_close_24px.svg);	
+}
+.n-true {
+	float: left; 
+	border-width: 0 1px 0 0;
+	@include vendor-prefix("border-radius", "50px 0 0 50px");
+}
+.n-false {
+	float: right; 
+	border-width: 0 0 0 1px;
+	@include vendor-prefix("border-radius", "0 50px 50px 0");
+}
+.n-course-button-container {
+	position: absolute;
+	bottom: 0;
+	height: $padding + $buttonHeight;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+.n-course-button {
+	font-size: 16px;
+	color: white;
+	background-color: $themeBG;
+	min-width: 285px;
+	max-width: 350px;
+	width: 90%;
+	height: $buttonHeight;
+	margin-top: 0; 
+	border-color: transparent;
+	//@include vendor-prefix("box-shadow", "0 0 10px rgba(0,0,0,0.75)");
+}
+.n-course-button.disabled {
+	opacity: 0.5;
+	background-color: $disabledBG;
+}
+
+// progress bar
+.n-progress-container {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	height: $progressHeight;
+	background-color: $themeBG;
+	z-index: 1;
+}
+.n-progress-inner {
+	display: table;
+	padding-left: $padding;
+	padding-right: $padding;
+	height: $progressBarHeight;
+	width: 100%;
+}
+.n-progress {
+	display: table-cell;
+	height: $progressBarHeight;
+	background: $progressBG;
+}
+.n-progress.on {
+	background: white;
+}
+.n-progress:first-child {
+	@include vendor-prefix("border-radius", $progressBarHeight/2 0 0 $progressBarHeight/2);
+}
+.n-progress:last-child {
+	@include vendor-prefix("border-radius", 0 $progressBarHeight/2 $progressBarHeight/2 0);
+}
+
+// one course block
+.n-home-course-container, .n-page-image-container {
+	position: relative;
+}
+
+.n-home-course-container:after, .n-page-image-container:after {
+	padding-top: $homeCoursePicRatio;
+	display: block;
+	content: '';
+}
+
+.n-home-course-inner, .n-page-image-inner {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	color: white;
+	background-color: $placeHolderBG;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-size: 100% auto;
+	border-bottom: $gutterWidth solid $defaultBG;
+}
+.n-home-course-inner:after, .n-page-image-inner:after {
+	content: '';
+	height: 100%;
+	width: 100%;
+	position: absolute; 
+}
+.n-home-course-green:after {
+	@include background-image (linear-gradient(225deg, rgba(#002F4b, 0), rgba(#417711, 0.7)));
+}
+.n-home-course-title {
+  	position: absolute;
+  	left:0;
+  	bottom:0;
+  	font-size: 1.1em;
+  	line-height: $defaultLineHeight;
+  	padding: 0 14px 0 14px;
+  	text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  	color: #FFF;
+  	z-index: 2;
+}
+
+
+
+.is-in-swift {
+	.n-content-container, .n-course-container {
+		top: $headerHeight + $statusBarHeight;
+	}
+}
+
+@media only screen and (min-width: 490px) and (max-width: 729px) {
+	@import "grid-layout/s-brick.scss";
+}
+
+@media only screen and (min-width: 490px) {
+	.n-home-course-container {
+		float: left;
+		width: 50%;
+	}
+	.n-home-course-inner {
+		border: $gutterWidth solid $defaultBG;
+	}
+	.n-content-inner {
+		padding: $gutterWidth;
+	}
+	.n-page-image-container {
+		margin-top: $padding;
+	}
+	body {
+		font-size:$bigFontSize;
+	}
+	.n-card-container {
+		width:100%;
+		height:100%;
+		display: table;
+		max-width:490px;
+		margin:auto;
+	}
+	.n-card-inner {
+		width: 100%;
+		height: 100%;
+		display: table-cell;
+		vertical-align: middle;
+		.n-page-image-container {
+			margin: 0 $padding;
+		}
+		.n-true-false-container {
+			position: static;
+			padding-top: $padding;
+		}
+	}
+	.n-page-true-false {
+		.n-card-inner {
+			.n-page-explain {
+				bottom:$padding;
+				width: 490px;
+				@include vendor-prefix("border-radius", $padding);
+				padding: $padding;
+			}
+		}
+	}
+}
+
+
+@media only screen and (min-width: 730px) and (max-width: 969px) {
+	@import "grid-layout/m-verge.scss";
+}
+
+@media only screen and (min-width: 730px) {
+	.n-home-course-container {
+		width: 33.33333333%;
+	}
+	body {
+		font-size:$biggerFontSize;
+	}
+	.n-list-title {
+		width: 45%;
+	}
+	.on {
+		.n-list-title {
+			width: 50%;
+		}
+	}
+	.n-list-container {
+		position: relative;
+	}
+	.n-list-text-container {
+		left: 47%;
+		right: 0;
+		top: $padding;
+		width: auto;
+	}
+	.n-list-text-title, .n-list-BG {
+		display: none;
+	}
+	.n-list-text {
+		background-color: $listBG;
+		color: white;
+	}
+}
+
+@media only screen and (min-width: 970px) {
+	@import "grid-layout/l-verge.scss";
+	body {
+		font-size:$largeFontSize;
+	}
+}
+
+@media only screen and (min-width: 1210px) {
+	.n-home-course-container {
+		
+	}
+}

@@ -1,0 +1,106 @@
+
+.n-header {
+	height: $headerHeight;
+	width: 100%;
+	position: absolute;
+	font-size: $baseFontSize;
+}
+.n-header__container {
+	background:$themeBG;
+}
+.n-header__primary {
+	height: $headerHeight;
+	line-height: $headerHeight;
+	position:relative;
+	text-align:center;
+	color:#FFFFFF;
+}
+.n-header__side {
+	position: absolute;
+	width: $sideButtonWidth;
+	height: $headerHeight;
+	line-height: $headerHeight;
+	top: 0;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+.n-header__left {
+	left: 0;
+}
+.n-header__right {
+	right: 0; 
+}
+.n-header__menu {
+	background-image: url(../images/ic_menu_24px.svg);
+}
+.n-header__setting {
+	background-image: url(../images/ic_settings_24px.svg);
+}
+.n-header__back {
+	background-image: url(../images/ic_chevron_left_24px.svg);
+	background-position: left center;
+	width: auto;
+	padding-left: 24px;
+	display:none;
+}
+.n-header__close {
+	width: auto;
+	display: none;
+	left: 62px;
+}
+.n-header__score {
+	width: $batteryWidth;
+	right: $padding;
+	display: none;
+}
+.n-battery-container {
+	width: 100%;
+	height: $batteryBodyHeight;
+	margin-top: ($headerHeight - $batteryBodyHeight + $batteryTopHeight) / 2;
+	background-color: $batteryBG;
+	position: relative;
+	@include vendor-prefix("border-radius", "2px");
+}
+.n-battery-inner {
+	@include vendor-prefix("border-radius", "2px 2px 0 0");
+}
+.n-battery-container.used.failed .n-battery-inner {
+	@include vendor-prefix("border-radius", "2px");
+	background-color: $batteryAlertBG;
+}
+.n-battery-container:before {
+	content: '';
+	height: $batteryTopHeight;
+	width: $batteryTopWidth;
+	display: block;
+	background-color: $batteryBG;
+	position: absolute;
+	top: -$batteryTopHeight;
+	left: 0;
+	right: 0;
+	margin: auto;
+	@include vendor-prefix("border-radius", "1px 1px 0 0");
+}
+.n-battery-container.used:before, .n-battery-inner {
+	background-color: $batteryUsedBG;
+}
+.n-battery-container.alert,.n-battery-container.used.failed:before  {
+	background-color: $batteryAlertBG;
+}
+.is-in-swift {
+	.n-header {
+		height: $headerHeight + $statusBarHeight;
+	}
+	.n-header__container {
+		padding-top: $statusBarHeight;
+	}
+}
+.n-in-course {
+	.n-header__back, .n-header__close.on, .n-header__score {
+		display: block;
+	}
+	.n-header__menu, .n-header__setting {
+		display: none;
+	}
+}
