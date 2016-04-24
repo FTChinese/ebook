@@ -11,3 +11,6 @@ gulp serve
 
 # publish
 gulp publish
+
+# note
+Please use the latest version of Mac OS, Node, and Gulp. 
