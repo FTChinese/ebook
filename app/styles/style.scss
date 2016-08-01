@@ -1047,7 +1047,7 @@ figure {
     &.inline {
         position: relative;
         padding-top: 56.25%;
-        background-color: grey;
+        //background-color: grey;
         display: block;
         margin: 20px auto;
         img {
@@ -1056,6 +1056,8 @@ figure {
             left:0;
             right:0;
             bottom:0;
+            margin:auto;
+            display:block;
         }
     }
 }

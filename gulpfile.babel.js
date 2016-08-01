@@ -91,6 +91,12 @@ gulp.task('api', () => {
     .pipe(gulp.dest('dist/api'));
 });
 
+
+gulp.task('ad', () => {
+  return gulp.src('../../ft/NEXT/app/m/marketing/*.*')
+    .pipe(gulp.dest('app/m/marketing'));
+});
+
 gulp.task('publish', ['build'], () => {
   gulp.src('dist/scripts/**/*')
     .pipe(gulp.dest('../../ft/dev_www/frontend/static/h5/scripts'));

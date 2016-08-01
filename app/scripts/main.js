@@ -1296,6 +1296,7 @@ function openbook() {
 
       //设置图片背景，依据屏幕尺寸大小来抓取合适的尺寸
         var thisBG;
+        var thisBGPortrait;
         var bgWidth = $(window).width();
         var bgHeight = $(window).height();
         if (isRetinaDevice === true) {
@@ -1304,6 +1305,10 @@ function openbook() {
         }
 
         thisBG = $(this).attr('data-bg') || '';
+        thisBGPortrait = $(this).attr('data-bg-portrait') || '';
+        if (bgWidth < bgHeight && thisBGPortrait !== '') {
+            thisBG = thisBGPortrait;
+        }
         if (thisBG !== '') {
             thisBG = thisBG.replace('i.ftimg.net', 'i.ftmailbox.com');
             thisBG = encodeURIComponent(thisBG);
@@ -1513,14 +1518,27 @@ function openbook() {
         w1 = w1.replace(/[\r\n\s<>]/g,"");
         var w2 = _this.html();
         w2 = w2.replace(/[\r\n\s<>]/g,"");
-        if (w1.length>0 && w2.length-w1.length<4) {
+        if (w1.length>2 && w2.length-w1.length<4 && w1.length < 80) {
             _this.css("text-indent",0);
             _paren.css({"text-indent":0});
-            if (!_paren.hasClass("contentheadline")) {$("<p class=placeholder><br></p>").insertBefore(_paren);}
+            if (!_paren.hasClass("contentheadline")) {
+                $("<p class=placeholder><br></p>").insertBefore(_paren);
+            }
             _paren.next().css("text-indent",0);
             _paren.addClass("keepwithnext").addClass("subTitle");
+        } else if (w1.length>0 && w2.length-w1.length<4) {
+            _this.css("text-indent",0);
+            _paren.css({"text-indent":0});
         }
     });
+
+    //处理文章中inline图片
+    //<figure class="inline keepwithnext loading" data-url="http://i.ftimg.net/picture/4/000061034_piclink.jpg"></figure>
+    $("#allcontent .flowedContent p img").each(function(){
+        //$(this).parent().css("text-indent",0);
+        $(this).unwrap().wrap('<figure class="inline keepwithnext"></figure>');
+    });
+
     //菜谱第一行的空白删除
     $(".food .placeholder").remove();
    
@@ -1860,6 +1878,50 @@ function playanimation() {
 
 }
 
+        //$currentSlide.find('.MPU').html(writeAd('mpu'));
+        // var m = $currentSlide.find('.MPU');
+        // var c = m.attr('data-adcode') || '11000003';
+        // var iframeSrc = '/m/marketing/a.html?v=10#adid='+ c + '&pid=MPU'+c;
+        // var iframeHTML = '<iframe class="banner-iframe" id="MPU' + c + '" width="300" height="250" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'" data-src="'+ iframeSrc +'"></iframe>';
+        // m.html(iframeHTML);
+
+var currentMPUNumber = 0;
+var mpuAds = {
+    'iphone':['0003','0004'],
+    'android':['0003','0004'],
+    'ipad':['0003','0004','0005'],
+    'desktop':['0003','0004','0005','0012','0013']
+};
+
+function writeAd(adType) {
+    var adPositions = [];
+    var currentAdch = '1100';
+    var adPositionsCount;
+    var c;
+    var iframeSrc;
+    var iframeHTML = '';
+    if (deviceType === 'iPad') {
+        adPositions = mpuAds['ipad'];
+        currentAdch = '2021';
+    } else if (deviceType === 'iPhone') {
+        adPositions = mpuAds['iphone'];
+        currentAdch = '2022';
+    } else if (deviceType !== 'other') {
+        adPositions = mpuAds['android'];
+        currentAdch = '2023';
+    } else {
+        adPositions = mpuAds['desktop'];
+        currentAdch = (typeof window.adchId === 'string')? window.adchId: '1100';
+    }
+    adPositionsCount = adPositions.length;
+    currentMPUNumber = currentMPUNumber % adPositionsCount;
+    c = currentAdch + adPositions[currentMPUNumber];
+    iframeSrc = '/m/marketing/a.html?v=10#adid='+ c + '&pid=MPU' + c + '&device=' + deviceType;
+    iframeHTML = '<iframe class="banner-iframe" id="MPU' + c + '" width="300" height="250" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'"></iframe>';
+    currentMPUNumber += 1;
+    return iframeHTML;
+}
+
 //处理某个slide的内容
 function playslide(slidenumber) {
     cs = slidenumber;
@@ -2178,6 +2240,16 @@ function playslide(slidenumber) {
         $currentSlide.find("img.large").eq(0).attr("id","largePic"+currentArticleNumber);
         enableFullScreen($currentSlide.find("img.large").eq(0));
         $currentSlide.find("figcaption").addClass("fadeInOut");
+    }
+
+    //如果页面中有广告位
+    if ($currentSlide.find('.MPU').length >0) {
+        $currentSlide.find('.MPU').html(writeAd('mpu'));
+        // var m = $currentSlide.find('.MPU');
+        // var c = m.attr('data-adcode') || '11000003';
+        // var iframeSrc = '/m/marketing/a.html?v=10#adid='+ c + '&pid=MPU'+c;
+        // var iframeHTML = '<iframe class="banner-iframe" id="MPU' + c + '" width="300" height="250" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'" data-src="'+ iframeSrc +'"></iframe>';
+        // m.html(iframeHTML);
     }
 
     
