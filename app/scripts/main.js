@@ -86,7 +86,7 @@ var screenType="small";//600像素以上的，定义为big
 var fontPreference="medium";
 var bgMode="";
 var mpuAmount=0;
-var currentMPU=0;
+//var currentMPU=0;
 var userinfo=navigator.userAgent||navigator.vendor||window.opera;
 var isipad;
 var deviceType = 'other';
@@ -554,11 +554,16 @@ function paginate($theObject) {
                 figCaption='<figcaption><span class="icon zoombg"></span>点击看大图</figcaption>';
             }
             var mpuPage=" attach-page-3";
+            var columnGapWidth = 21;
+            if (300 + columnGapWidth*2 > windowWidth && windowWidth > 300) {
+                columnGapWidth = parseInt ((windowWidth - 300)/2, 10);
+                pagePadding = columnGapWidth;
+            }
             var cf = new FTColumnflow("articletarget"+slidenumber, "articleviewport"+slidenumber, {
                     columnWidth:            300,
                     viewportWidth:          windowWidth,
                     viewportHeight:         coverheight,
-                    columnGap:              21,
+                    columnGap:              columnGapWidth,
                     standardiseLineHeight:  true, //useful when you have subTitle or varied fonts
                     pagePadding:            pagePadding,
                     minFixedPadding:        0.5
@@ -656,20 +661,13 @@ function paginate($theObject) {
                     inlineVideoClass += ' inline-video-container anchor-bottom-col-2';
                     fixedContent += '<div class="' + inlineVideoClass + '" style="width: '+ cf.layoutDimensions.columnWidth +'px; height: ' + videoHeight + 'px;">' + inlineVideo + '</div>';
                 }
+                
                 //如果没有自定义的fixedContent，才投放MPU广告
                 if ($currentSlide.find(".myFixedContent").length>0) {
                     fixedContent += $currentSlide.find(".myFixedContent").eq(0).html();
-                } else if (mpuAmount>0){
+                } else{
                     var mpuHeight=250;
-                   
-                    if ($("#mpuads .mpuad").eq(currentMPU).find(".MPU").css("height") && $("#mpuads .mpuad").eq(currentMPU).find(".MPU").css("height") !== null) {
-                        mpuHeight=$("#mpuads .mpuad").eq(currentMPU).find(".MPU").css("height");
-                        mpuHeight=mpuHeight.replace(/px/g,"");
-                        mpuHeight=parseInt(mpuHeight);
-                    }
-                    fixedContent +='<div class="anchor-bottom-col-10'+mpuPage+'" style="display:table;width:300px;height:'+mpuHeight+'px;"><div style="display:table-cell;text-align:center;height:100%;width:100%;vertical-align:bottom;">' + $("#mpuads .mpuad").eq(currentMPU).html() + '</div></div>';
-                    currentMPU = currentMPU +1; 
-                    if (currentMPU>=mpuAmount) {currentMPU=0;}
+                    fixedContent +='<div class="anchor-bottom-col-10'+mpuPage+'" style="display:table;width:300px;height:'+mpuHeight+'px;"><div style="display:table-cell;text-align:center;height:100%;width:100%;vertical-align:bottom;"><div class="MPU"></div></div></div>';
                 }
             } else {
                     fixedContent = $currentSlide.find(".fixedContent").html();
@@ -1273,7 +1271,7 @@ function openbook() {
         startPage=parseInt(startPage, 10);
         everyPage=parseInt(everyPage, 10);
         //必须要在文章后面才能加广告，唯一的例外是第一个广告
-        if (($(this).find(".article").length>0 && index-startPage>=0 && (index-startPage) % everyPage === 0) || index===startPage) {
+        if (($(this).find(".article").length>=0 && index-startPage>=0 && (index-startPage) % everyPage === 0) || index===startPage) {
             if (adcount>=fullpageadsLength) {
                 adcount=0;
             }
@@ -1482,7 +1480,7 @@ function openbook() {
         } else if ($(this).find(".excerpt .lead,.article .lead,.page .lead").length>0) {
             lead = "<div class = contentlead>"+$(this).find(".excerpt .lead,.article .lead,.page .lead").eq(0).html()+"</div>";
         }
-        if ($(this).attr('title') && $(this).attr('title') !== '') {
+        if ($(this).attr('title') && $(this).attr('title') !== '' && $(this).attr('title') !== '封面') {
             $("#allcontent .contentcategory").append('<div class=contentheadline n1target = '+i+' onclick="jumptoarticle('+i+',0)">'+headshotImg+'<b>'+$(this).attr('title')+'</b>'+lead+'<div class=clearfloat></div></div>');
             //alert ($(this).attr('title'));
         } else if ($(this).find(".excerpt .headline,.article .headline,.page .headline").length>0 && i>0 && contentpage === 1 && $(this).find(".contentcategory").length === 0) {
@@ -1518,6 +1516,7 @@ function openbook() {
         w1 = w1.replace(/[\r\n\s<>]/g,"");
         var w2 = _this.html();
         w2 = w2.replace(/[\r\n\s<>]/g,"");
+
         if (w1.length>2 && w2.length-w1.length<4 && w1.length < 80) {
             _this.css("text-indent",0);
             _paren.css({"text-indent":0});
@@ -1527,8 +1526,8 @@ function openbook() {
             _paren.next().css("text-indent",0);
             _paren.addClass("keepwithnext").addClass("subTitle");
         } else if (w1.length>0 && w2.length-w1.length<4) {
-            _this.css("text-indent",0);
-            _paren.css({"text-indent":0});
+            _this.css({"text-indent":0,"font-weight":"normal","color": "#555"});
+            _paren.css({"text-indent":0,"font-weight":"normal"});
         }
     });
 
@@ -1892,34 +1891,57 @@ var mpuAds = {
     'ipad':['0003','0004','0005'],
     'desktop':['0003','0004','0005','0012','0013']
 };
+var halfPageMPUs = ['0106'];
+var fullPageAds = {
+    'iphone':['0117'],
+    'android':['0117'],
+    'ipad':['0117'],
+    'desktop':['0117']
+};
 
 function writeAd(adType) {
+    var ad;
     var adPositions = [];
     var currentAdch = '1100';
     var adPositionsCount;
     var c;
     var iframeSrc;
     var iframeHTML = '';
+    var mpuWidth = '300';
+    var mpuHeight = '250';
+    if (adType === 'mpu') {
+        ad = mpuAds;
+    } else if (adType === 'fullpage') {
+        ad = fullPageAds;
+        mpuWidth = '1';
+        mpuHeight = '1';
+        window.adchId = '2050';
+    }
     if (deviceType === 'iPad') {
-        adPositions = mpuAds['ipad'];
+        adPositions = ad.ipad;
         currentAdch = '2021';
     } else if (deviceType === 'iPhone') {
-        adPositions = mpuAds['iphone'];
+        adPositions = ad.iphone;
         currentAdch = '2022';
     } else if (deviceType !== 'other') {
-        adPositions = mpuAds['android'];
+        adPositions = ad.android;
         currentAdch = '2023';
     } else {
-        adPositions = mpuAds['desktop'];
+        adPositions = ad.desktop;
         currentAdch = (typeof window.adchId === 'string')? window.adchId: '1100';
     }
     adPositionsCount = adPositions.length;
     currentMPUNumber = currentMPUNumber % adPositionsCount;
     c = currentAdch + adPositions[currentMPUNumber];
-    iframeSrc = '/m/marketing/a.html?v=10#adid='+ c + '&pid=MPU' + c + '&device=' + deviceType;
-    iframeHTML = '<iframe class="banner-iframe" id="MPU' + c + '" width="300" height="250" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'"></iframe>';
+    if (halfPageMPUs.indexOf(adPositions[currentMPUNumber])>=0) {
+        mpuHeight = 600;
+    }
+    iframeSrc = '/m/marketing/a.html?v=11#adid='+ c + '&pid=AD' + c + '&device=' + deviceType;
+    iframeHTML = '<iframe style="width: ' + mpuWidth + 'px; height: ' + mpuHeight + 'px;" class="banner-iframe" id="AD' + c + '" width="' + mpuWidth + '" height="' + mpuHeight + '" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'"></iframe>';
     currentMPUNumber += 1;
+    //alert (iframeHTML);
     return iframeHTML;
+
 }
 
 //处理某个slide的内容
@@ -2245,6 +2267,17 @@ function playslide(slidenumber) {
     //如果页面中有广告位
     if ($currentSlide.find('.MPU').length >0) {
         $currentSlide.find('.MPU').html(writeAd('mpu'));
+        // var m = $currentSlide.find('.MPU');
+        // var c = m.attr('data-adcode') || '11000003';
+        // var iframeSrc = '/m/marketing/a.html?v=10#adid='+ c + '&pid=MPU'+c;
+        // var iframeHTML = '<iframe class="banner-iframe" id="MPU' + c + '" width="300" height="250" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'" data-src="'+ iframeSrc +'"></iframe>';
+        // m.html(iframeHTML);
+    }
+
+    //如果页面是全屏广告
+    
+    if ($currentSlide.find('.fullpage-ad').length >0) {
+        $currentSlide.find('.fullpage-ad').html(writeAd('fullpage'));
         // var m = $currentSlide.find('.MPU');
         // var c = m.attr('data-adcode') || '11000003';
         // var iframeSrc = '/m/marketing/a.html?v=10#adid='+ c + '&pid=MPU'+c;

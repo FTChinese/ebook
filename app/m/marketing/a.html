@@ -61,6 +61,7 @@ if (/^[0-9]{4}0001$/.test(c)) {
 }
 var slotStr = window.parent.slotStr || '';
 var parentId = k.replace(/^.*pid=([0-9A-Za-z\-]+).*$/,"$1");
+
 var adP = '';
 try {
     adP = parent.adReachability();
@@ -68,17 +69,73 @@ try {
 
 }
 
+if (1===2 && /^[0-9]+0117$/.test(c)) {
 
-if (1===2 && c === '20220101') {
-    //console.log ('is iphone top banner')
+var images = {
+    'phonePortrait': 'http://i.ftimg.net/picture/9/000064219_piclink.jpg',
+    'phoneLandscape': 'http://i.ftimg.net/picture/0/000064220_piclink.jpg',
+    'padPortrait':'http://i.ftimg.net/picture/7/000064217_piclink.jpg',
+    'padLandscape':'http://i.ftimg.net/picture/8/000064218_piclink.jpg'
+};
+var link = 'http://www.ftchinese.com/channel/radio.html';
+var bg = 'black';
+var w;
+var h;
+var imageSrc = '';
+var maxWidth = '100%';
+var maxHeight = '100%';
+var isRetinaDevice = (window.devicePixelRatio > 1);
+var imageWidth;
+var commonDeviceWidths = [1024,768,320,360,375,414];
+try {
+    w = window.parent.innerWidth || window.parent.document.documentElement.clientWidth || window.parent.document.body.clientWidth;
+    h = window.parent.innerHeight || window.parent.document.documentElement.clientHeight || window.parent.document.body.clientHeight;
+} catch (ignore) {
+    w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+}
+imageWidth = w;
+if (w<490) {
+    imageSrc = images.phonePortrait;
+} else if (w<700 && w>h) {
+    imageSrc = images.phoneLandscape;
+} else if (w > h) {
+    imageSrc = images.padLandscape;
+} else {
+    imageSrc = images.padPortrait;
+}
+if (w>1024) {
+    maxWidth = '1024px';
+    imageWidth = 1024;
+}
+if (w>768) {
+    maxHeight = '768px';
+}
+
+if (commonDeviceWidths.indexOf(imageWidth)<0) {
+    imageWidth = Math.ceil(imageWidth/100) * 100;
+}
+if (isRetinaDevice === true) {
+  imageWidth = imageWidth * 2;
+}
+imageSrc = encodeURIComponent(imageSrc);
+imageSrc = 'http://image.webservices.ft.com/v1/images/raw/' + imageSrc + '?source=ftchinese&width=' + imageWidth;
+imageSrc = '<a href="'+link+'" target="_blank"><img src="'+imageSrc+'" style="max-width:'+maxWidth+';max-height:'+maxHeight+';display:block;margin:auto;position:absolute;top:0;bottom:0;left:0;right:0;"></a>';
+try {
+    var ele = window.parent.document.getElementById(parentId).parentNode;
+    ele.style.backgroundColor = bg;
+    ele.style.position = 'relative';
+    ele.innerHTML = imageSrc;
+} catch (ignore) {
+    document.body.style.backgroundColor = bg;
+    document.body.style.position = 'relative';
+    document.write (imageSrc);
+}
+
 
 } else {
 document.write ('<scr'+'ipt src="http://dolphin.ftimg.net/s?z=ft&c=' + c + slotStr + adP + '&_fallback=0" charset="gbk" onerror="removeAd()" onload="loaded()"></scr'+'ipt>');
 }
-
-//document.write ('<scr'+'ipt src="http://dolphin.ftimg.net/s?z=ft&amp;c=15020010&amp;slot=37892332&amp;_sex=101&amp;_trip=1&amp;_sm=0&amp;_ibm=0&amp;_lux=1&amp;_dc=1&amp;_mm=2&amp;_sz=2&amp;_am=2" charset="gbk" onerror="removeAd()" onload="loaded()"></scr'+'ipt>');
-
-//var adBGColor = 'white';
 </script>
 </div></div>
 <div id="ad-bottom"></div>
@@ -103,7 +160,6 @@ var adResized = false;
 
 
 var w=0;
-
 
 if ( window.parent.document.getElementById(parentId)) {
     parentIframe = window.parent.document.getElementById(parentId)
@@ -135,7 +191,7 @@ if ( window.parent.document.getElementById(parentId)) {
         try {
             if (w<=1200) {
                 if (parentId.indexOf('mpu')>=0) {
-                    alert (paretId);
+                    //alert (paretId);
                     parentIframe.parentNode.style.height = 'auto';
                 } else {
                     parentIframe.parentNode.style.height = adHeight + 'px';
@@ -164,6 +220,36 @@ if (window.parent && parentId !== '' && /^banner/.test(parentId) && typeof stick
         window.parent.stickyBottomPrepare();
     } catch (ignore) {
         
+    }
+}
+//in a iframe of h5 template
+if (window.parent && typeof window.parent.mpuAds === 'object' && parentId !== '') {
+    if (typeof parentIframe === 'object') {
+        var parentContainer = parentIframe.parentNode;
+        var overlayLink;
+        var adUrl = '';
+
+        if (document.querySelector('.ad a')) {
+            adUrl = document.querySelector('.ad a').href || '';
+        }
+        
+        if (adUrl !== '') {
+            if (parentContainer.getElementsByTagName('a').length===0) {
+                overlayLink = document.createElement("a");
+                parentContainer.appendChild(overlayLink);
+            } else {
+                overlayLink = parentContainer.getElementsByTagName('a')[0];
+            }
+            parentContainer.style.position = 'relative';
+            overlayLink.href = adUrl;
+            overlayLink.style.position = 'absolute';
+            overlayLink.style.width = '100%';
+            overlayLink.style.height = '100%';
+            overlayLink.style.display = 'block';
+            overlayLink.style.top = 0;
+            overlayLink.style.left = 0;
+            overlayLink.target = '_blank';
+        }
     }
 }
 </script>

@@ -156,7 +156,11 @@ box-shadow: 0 1px 2px rgba(255,255,255,0.2),inset -1px -1px rgba(255,255,255,0.3
 #game .layout-5 p {text-indent:0;padding:0 3%;}
 
 .slide div.MPU {height:250px;max-width:300px;margin:0 auto;text-align:center;}
-
+.slide div.halfpage {height:600px;max-width:300px;margin:0 auto;text-align:center;}
+.fullpage-ad {
+    width:100%;
+    height:100%;
+}
 
 /*FT规定的颜色、边距等*/
 .tint-inner{padding:5%;}
@@ -997,7 +1001,18 @@ opacity:0;
 .contentauthor {display:none;}
 .category {font-weight:bold;color:#9b164f;}
 .slide p.contentheadline,.slide p.category {text-indent:0;}
-.contentheadline b{font-size:1.1em;color:#000;line-height:162%;white-space:nowrap;overflow:hidden;max-width:300px;text-overflow:ellipsis;font-weight:bold;display:block;}
+.contentheadline b{
+    font-size:1.1em;
+    color:#000;
+    line-height:140%;
+    margin-bottom: 0.5em;
+    //white-space:nowrap;
+    overflow:hidden;
+    //max-width:300px;
+    //text-overflow:ellipsis;
+    font-weight:bold;
+    display:block;
+}
 .contentheadline,.contentlead{color:#777;font-size:17px;}
 .contentheadline{padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid #e3d3bc;clear:both;}
 .contentpage .scrollPage {height:100%;overflow:hidden;}
