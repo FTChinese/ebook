@@ -1,3 +1,6 @@
+# This project is deprecated. For new project, look here: 
+git clone https://github.com/FTChinese/ebook-new.git
+
 # ebook
 HTML 5 Based Special Reports, eBooks and Interactive Features
 
