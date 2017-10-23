@@ -561,7 +561,8 @@ function paginate($theObject) {
                     columnGap:              21,
                     standardiseLineHeight:  true, //useful when you have subTitle or varied fonts
                     pagePadding:            pagePadding,
-                    minFixedPadding:        0.5
+                    minFixedPadding:        0.5,
+                    noWrapOnTags:           ['figure', 'h3', 'img', '.pic', '.leftPic', '.rightPic', '.midPic']
             });
             var videoHeight = cf.layoutDimensions.columnWidth * 9 / 16 + 30;
             var inlineImgHeight = cf.layoutDimensions.columnWidth * 3 / 4;
@@ -1901,16 +1902,16 @@ function writeAd(adType) {
     var iframeSrc;
     var iframeHTML = '';
     if (deviceType === 'iPad') {
-        adPositions = mpuAds['ipad'];
+        adPositions = mpuAds.ipad;
         currentAdch = '2021';
     } else if (deviceType === 'iPhone') {
-        adPositions = mpuAds['iphone'];
+        adPositions = mpuAds.iphone;
         currentAdch = '2022';
     } else if (deviceType !== 'other') {
-        adPositions = mpuAds['android'];
+        adPositions = mpuAds.android;
         currentAdch = '2023';
     } else {
-        adPositions = mpuAds['desktop'];
+        adPositions = mpuAds.desktop;
         currentAdch = (typeof window.adchId === 'string')? window.adchId: '1100';
     }
     adPositionsCount = adPositions.length;
