@@ -119,7 +119,7 @@ if (isRetinaDevice === true) {
   imageWidth = imageWidth * 2;
 }
 imageSrc = encodeURIComponent(imageSrc);
-imageSrc = 'http://image.webservices.ft.com/v1/images/raw/' + imageSrc + '?source=ftchinese&width=' + imageWidth;
+imageSrc = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + imageSrc + '?source=ftchinese&width=' + imageWidth;
 imageSrc = '<a href="'+link+'" target="_blank"><img src="'+imageSrc+'" style="max-width:'+maxWidth+';max-height:'+maxHeight+';display:block;margin:auto;position:absolute;top:0;bottom:0;left:0;right:0;"></a>';
 try {
     var ele = window.parent.document.getElementById(parentId).parentNode;

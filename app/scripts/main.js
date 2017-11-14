@@ -761,7 +761,7 @@ function articlepage() {
         startSlide:startSlide
     });
     if (isTouchDevice() === false) {//if you are on a none-touch device, add click functions
-        /*
+        
         $("#swipe").click(function(e){
             
             if (/\b(notouch|notouchall|notouchmove|notouchstart|notouchend)\b/.test(e.target.className)) {//如果是点击Navigation横滚动条一类的object，则不翻页，也不调出底部滑轨
@@ -774,13 +774,13 @@ function articlepage() {
                 slider.gonext();
             } else {
 				try{
-					//switchRail();
+					switchRail();
 				}catch(err){
 				}
 			}
-            
         });
-        */
+
+        
         $("#swipe .arrow-prev div, #swipe .arrow-next div").click(function(e){
             if ($(this).parent().hasClass('arrow-prev') === true) {
                 slider.goprev();
@@ -1310,7 +1310,7 @@ function openbook() {
         if (thisBG !== '') {
             thisBG = thisBG.replace('i.ftimg.net', 'i.ftmailbox.com');
             thisBG = encodeURIComponent(thisBG);
-            thisBG = 'https://image.webservices.ft.com/v1/images/raw/' + thisBG + '?source=ftchinese&width=' + bgWidth + '&height=' + bgHeight + '&fit=cover';
+            thisBG = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + thisBG + '?source=ftchinese&width=' + bgWidth + '&height=' + bgHeight + '&fit=cover';
             $(this).css('background-image', 'url(' + thisBG + ')');
         }
 
@@ -1915,7 +1915,16 @@ function writeAd(adType) {
         ad = fullPageAds;
         mpuWidth = '1';
         mpuHeight = '1';
-        window.adchId = '2050';
+        if (deviceType === 'iPad') {
+            window.adchId = '2021';
+        } else if (deviceType === 'iPhone') {
+            window.adchId = '2022';
+        } else if (deviceType !== 'other' || $(window).width() <= 490) {
+            // android, windows phone, blackberry
+            window.adchId = '2023';
+        } else {
+            window.adchId = '2050';
+        }
     }
     if (deviceType === 'iPad') {
         adPositions = ad.ipad;
@@ -1936,12 +1945,29 @@ function writeAd(adType) {
     if (halfPageMPUs.indexOf(adPositions[currentMPUNumber])>=0) {
         mpuHeight = 600;
     }
-    iframeSrc = '/m/marketing/a.html?v=11#adid='+ c + '&pid=AD' + c + '&device=' + deviceType;
+    iframeSrc = '/m/marketing/a.html?v=12#adid='+ c + '&pid=AD' + c + '&device=' + deviceType;
     iframeHTML = '<iframe style="width: ' + mpuWidth + 'px; height: ' + mpuHeight + 'px;" class="banner-iframe" id="AD' + c + '" width="' + mpuWidth + '" height="' + mpuHeight + '" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src="'+ iframeSrc +'"></iframe>';
     currentMPUNumber += 1;
     //alert (iframeHTML);
     return iframeHTML;
+}
 
+
+function jumptoquiz() {
+    var k = $("#allcontent .option:not(.done)").eq(0).parent().parent().parent().attr("articlenumber");
+    jumptoarticle(k);
+}
+
+function jumptostory(storyid){
+    var n = $("#allcontent .slide[storyid = "+storyid+"]").attr("articlenumber");
+    if (typeof n === 'undefined') {
+        n=0;
+    }
+    if (n === null || n === '') {
+        n=0;
+    }
+    n=parseInt(n);
+    jumptoarticle(n);
 }
 
 //处理某个slide的内容
@@ -2099,7 +2125,7 @@ function playslide(slidenumber) {
       if (imageWidth > 0 && imageHeight > 0) {
         imageUrl = imageUrl.replace('i.ftimg.net', 'i.ftmailbox.com');
         imageUrl = encodeURIComponent(imageUrl);
-        imageUrl = 'https://image.webservices.ft.com/v1/images/raw/' + imageUrl + '?source=ftchinese&width=' + imageWidth + '&height=' + imageHeight + '&fit=' + fitType;
+        imageUrl = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + imageUrl + '?source=ftchinese&width=' + imageWidth + '&height=' + imageHeight + '&fit=' + fitType;
         thisFigure.html('<img src="' + imageUrl + '">');
         thisFigure.removeClass('loading');
       }
@@ -2285,6 +2311,29 @@ function playslide(slidenumber) {
         // m.html(iframeHTML);
     }
 
+    // 如果页面中有链接
+    $currentSlide.find('a[href]').each(
+        function () {
+            var url = $(this).attr('href');
+            var storyId;
+            if (/\/story\/[0-9]+/.test(url)) {
+                storyId = url.replace(/.*\/story\/([0-9]+).*/g, '$1');
+                //console.log (storyId);
+                if ($('.slide[storyid='+storyId+']').length>0) {
+                    //console.log (storyId);
+                    //console.log ($(this).html());
+                    //$(this).html('test from oliver');
+                    //console.log ('remove link');
+                    $(this).removeAttr('href').addClass('bluelink');                
+                    $(this).on('click',function(){
+                        jumptostory(storyId);
+                        //return false;
+                    });
+                }
+            }
+        }
+    );
+
     
     //记录一次PV，由于本地文件不支持cookie，所以无法记录UU
     //gaTrack('UA-1608715-1', 'm.ftchinese.com', '/mbagym/book/'+ce+'/'+cs, 'MBA GYM: '+ce);
@@ -2305,22 +2354,7 @@ function playslide(slidenumber) {
 
 
 
-function jumptoquiz() {
-    var k = $("#allcontent .option:not(.done)").eq(0).parent().parent().parent().attr("articlenumber");
-    jumptoarticle(k);
-}
 
-function jumptostory(storyid){
-    var n = $("#allcontent .slide[storyid = "+storyid+"]").attr("articlenumber");
-    if (typeof n === 'undefined') {
-    	n=0;
-    }
-    if (n === null || n === '') {
-    	n=0;
-    }
-    n=parseInt(n);
-    jumptoarticle(n);
-}
 
 
 
@@ -2459,7 +2493,12 @@ function speedquiz() {
 }
 
 
-
+function sendEvent(ec, ea, el, ei) {
+  try {
+    ga('send','event',ec, ea, el, ei);
+  } catch (ignore) {
+  }
+}
 
 //在本地运行的GA Track，可以向GA发送访问信息，以记录PV，来源：http://remysharp.com/2009/02/27/analytics-for-bookmarklets-injected-scripts/
 function c(e,j){return e+Math.floor(Math.random()*(j-e));}
