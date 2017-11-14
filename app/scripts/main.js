@@ -566,7 +566,8 @@ function paginate($theObject) {
                     columnGap:              columnGapWidth,
                     standardiseLineHeight:  true, //useful when you have subTitle or varied fonts
                     pagePadding:            pagePadding,
-                    minFixedPadding:        0.5
+                    minFixedPadding:        0.5,
+                    noWrapOnTags:           ['figure', 'h3', 'img', '.pic', '.leftPic', '.rightPic', '.midPic']
             });
             var videoHeight = cf.layoutDimensions.columnWidth * 9 / 16 + 30;
             var inlineImgHeight = cf.layoutDimensions.columnWidth * 3 / 4;
